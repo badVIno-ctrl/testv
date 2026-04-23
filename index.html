@@ -40,7 +40,7 @@
       gap: 0;
     }
 
-    /* HEADER */
+    /* ══ HEADER ══ */
     .site-header {
       text-align: center;
       margin-bottom: 26px;
@@ -64,28 +64,28 @@
       font-size: 12px; color: var(--muted); margin-top: 7px;
     }
 
-    /* SCREENS */
+    /* ══ SCREENS ══ */
     .screen {
       display: none; flex-direction: column;
       gap: 16px; animation: fadeIn .45s ease both;
     }
     .screen.active { display: flex; }
 
-    /* CARD */
+    /* ══ CARD ══ */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-brd);
       border-radius: 14px; padding: 20px 18px;
     }
 
-    /* SECTION TITLE */
+    /* ══ SECTION TITLE ══ */
     .section-title {
       font-size: 10px; letter-spacing: 2px;
       text-transform: uppercase; color: var(--accent);
       margin-bottom: 12px;
     }
 
-    /* PROGRESS */
+    /* ══ PROGRESS ══ */
     .progress-bar-wrap { display: flex; align-items: center; gap: 10px; }
     .progress-bar-track {
       flex: 1; height: 4px;
@@ -100,7 +100,7 @@
     .progress-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
     .progress-time  { font-size: 10px; color: rgba(122,138,58,0.5); white-space: nowrap; }
 
-    /* TIMER MODE */
+    /* ══ TIMER MODE ══ */
     .timer-wrap {
       display: none; align-items: center; gap: 8px;
       padding: 6px 12px;
@@ -126,7 +126,7 @@
       color: var(--highlight); min-width: 22px; text-align: right;
     }
 
-    /* QUESTION */
+    /* ══ QUESTION ══ */
     .question-num {
       font-size: 10px; letter-spacing: 2px;
       text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
@@ -137,7 +137,7 @@
       line-height: 1.45; margin-bottom: 20px;
     }
 
-    /* OPTIONS */
+    /* ══ OPTIONS ══ */
     .options { display: flex; flex-direction: column; gap: 9px; }
     .option-btn {
       background: rgba(83,144,15,0.1);
@@ -153,44 +153,7 @@
     .option-btn:active { background: rgba(164,167,30,0.25); border-color: var(--highlight); transform: translateX(2px) scale(0.98); }
     .option-btn.selected { background: rgba(214,206,21,0.18); border-color: var(--highlight); color: var(--highlight); }
 
-    /* SLIDER */
-    .slider-wrap {
-      display: flex; flex-direction: column; gap: 8px;
-      margin-top: 10px;
-    }
-    .slider {
-      width: 100%; height: 6px;
-      background: rgba(83,144,15,0.2);
-      border-radius: 99px; outline: none;
-      -webkit-appearance: none;
-    }
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 20px; height: 20px;
-      background: var(--highlight);
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 0 6px rgba(214,206,21,0.6);
-    }
-    .slider::-moz-range-thumb {
-      width: 20px; height: 20px;
-      background: var(--highlight);
-      border-radius: 50%;
-      cursor: pointer;
-      border: none;
-    }
-    .slider-labels {
-      display: flex; justify-content: space-between;
-      font-size: 11px; color: var(--muted);
-    }
-    .slider-value {
-      font-size: 14px; font-weight: 700;
-      color: var(--highlight); text-align: center;
-      margin-top: 4px;
-    }
-
-    /* ANALYZING */
+    /* ══ ANALYZING ══ */
     .analyzing-wrap {
       display: flex; flex-direction: column;
       align-items: center; gap: 24px;
@@ -209,7 +172,7 @@
     .analyzing-step.done    { color: var(--accent); }
     .api-note { font-size: 10px; color: rgba(122,138,58,0.5); margin-top: 6px; }
 
-    /* RESULT */
+    /* ══ RESULT ══ */
     .result-type-label {
       font-size: 10px; letter-spacing: 3px;
       text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
@@ -219,9 +182,7 @@
       font-weight: 700; color: var(--highlight);
       letter-spacing: 1px; line-height: 1.1;
     }
-    .result-predict {
-      margin-top: 14px; display: flex; align-items: center; gap: 10px;
-    }
+    .result-predict { margin-top: 14px; display: flex; align-items: center; gap: 10px; }
     .result-predict-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
     .result-predict-bar-track {
       flex: 1; height: 6px;
@@ -255,7 +216,7 @@
       line-height: 1.65; font-style: italic; min-height: 40px;
     }
 
-    /* TYPEWRITER */
+    /* ══ TYPEWRITER ══ */
     .typewriter-cursor {
       display: inline-block; width: 2px; height: 14px;
       background: var(--highlight); margin-left: 2px;
@@ -264,14 +225,14 @@
     }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* RADAR */
+    /* ══ RADAR ══ */
     .radar-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .radar-wrap svg { overflow: visible; }
     .radar-legend { display: flex; flex-wrap: wrap; gap: 5px 12px; justify-content: center; margin-top: 4px; }
     .radar-legend-item { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
     .radar-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
-    /* STATS */
+    /* ══ STATS ══ */
     .stats-row { display: flex; flex-direction: column; gap: 8px; }
     .stats-item { display: flex; flex-direction: column; gap: 4px; }
     .stats-item-head { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
@@ -294,7 +255,7 @@
       padding: 2px 8px; border-radius: 4px; letter-spacing: 1px;
     }
 
-    /* HISTORY */
+    /* ══ HISTORY ══ */
     .history-list { display: flex; flex-direction: column; gap: 9px; }
     .history-item {
       background: rgba(83,144,15,0.08);
@@ -314,7 +275,7 @@
     .history-item-label{ font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
     .history-empty { font-size: 13px; color: var(--muted); text-align: center; padding: 10px 0; }
 
-    /* COMPARE */
+    /* ══ COMPARE ══ */
     .compare-select-wrap { display: flex; flex-direction: column; gap: 8px; }
     .compare-select-item {
       display: flex; align-items: center; gap: 10px;
@@ -334,7 +295,7 @@
     .compare-legend { display: flex; gap: 16px; font-size: 11px; color: var(--muted); }
     .compare-legend-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
 
-    /* SHARE */
+    /* ══ SHARE ══ */
     .share-compact {
       display: flex; align-items: center; gap: 10px;
       background: rgba(83,144,15,0.1);
@@ -352,7 +313,7 @@
     .copy-btn:hover { background: var(--secondary); }
     .copy-btn.copied { background: var(--primary); color: var(--highlight); }
 
-    /* TIMING */
+    /* ══ TIMING ══ */
     .timing-row { display: flex; gap: 7px; flex-wrap: wrap; }
     .timing-chip {
       font-size: 10px; background: rgba(83,144,15,0.12);
@@ -361,7 +322,7 @@
     }
     .timing-chip span { color: var(--secondary); }
 
-    /* FRIEND RATING */
+    /* ══ FRIEND RATING ══ */
     .friend-rating-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
     .rating-btn {
       flex: 1; min-width: 80px;
@@ -380,7 +341,7 @@
     .rating-bar-track { flex: 1; height: 4px; background: rgba(83,144,15,0.2); border-radius: 99px; overflow: hidden; }
     .rating-bar-fill  { height: 100%; border-radius: 99px; background: var(--accent); transition: width .8s ease; width: 0%; }
 
-    /* AI CHAT */
+    /* ══ AI CHAT ══ */
     .chat-messages {
       display: flex; flex-direction: column; gap: 10px;
       max-height: 320px; overflow-y: auto;
@@ -431,7 +392,7 @@
     .chat-send:disabled { background: rgba(83,144,15,0.3); cursor: not-allowed; }
     .chat-limit { font-size: 10px; color: var(--muted); text-align: right; margin-top: 4px; }
 
-    /* BUTTONS */
+    /* ══ BUTTONS ══ */
     .btn {
       display: block; width: 100%;
       padding: 14px 20px; border-radius: 10px;
@@ -451,7 +412,7 @@
     .btn-row { display: flex; gap: 8px; }
     .btn-row .btn { flex: 1; }
 
-    /* TIMER MODE TOGGLE */
+    /* ══ TIMER MODE TOGGLE ══ */
     .mode-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .mode-label { font-size: 12px; color: var(--muted); }
     .toggle-wrap { display: flex; align-items: center; gap: 8px; }
@@ -475,7 +436,7 @@
     .toggle input:checked + .toggle-slider:before { transform: translateX(18px); background: var(--highlight); }
     .toggle-label { font-size: 11px; color: var(--muted); }
 
-    /* TABS */
+    /* ══ TABS ══ */
     .tabs { display: flex; gap: 6px; }
     .tab-btn {
       flex: 1; padding: 9px 4px;
@@ -491,13 +452,19 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; animation: fadeIn .3s ease both; }
 
-    /* START */
+    /* ══ START ══ */
     .start-list { display: flex; flex-direction: column; gap: 8px; }
     .start-list-item { font-size: 13px; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; }
     .start-list-item span.dot { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
     .start-note { font-size: 11px; color: rgba(122,138,58,0.6); text-align: center; margin-top: -4px; }
 
-    /* ERROR */
+    /* ══ DISCLAIMER ══ */
+    .disclaimer {
+      font-size: 12px; color: var(--muted); text-align: center;
+      padding: 10px 0; border-top: 1px solid rgba(83,144,15,0.2);
+    }
+
+    /* ══ ERROR ══ */
     .error-box {
       background: rgba(180,30,30,0.12);
       border: 1px solid rgba(200,50,50,0.4);
@@ -511,26 +478,30 @@
     }
     .api-status span { color: var(--accent); }
 
-    /* ANIMATIONS */
+    /* ══ ANIMATIONS ══ */
     @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     @keyframes spin   { to { transform: rotate(360deg); } }
     @keyframes pulseGlow {
       0%,100% { box-shadow: 0 0 0 0 rgba(214,206,21,0); }
       50%      { box-shadow: 0 0 18px 4px rgba(214,206,21,0.15); }
     }
+    @keyframes rollUp {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
 
-    /* SCROLLBAR */
+    /* ══ SCROLLBAR ══ */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
 
-    /* FOOTER */
+    /* ══ FOOTER ══ */
     .site-footer {
       text-align: center; margin-top: 28px;
       font-size: 10px; color: rgba(122,138,58,0.3); letter-spacing: 1px;
     }
 
-    /* DIVIDER */
+    /* ══ DIVIDER ══ */
     .divider {
       height: 1px; background: rgba(83,144,15,0.2);
       margin: 4px 0;
@@ -542,18 +513,17 @@
 
   <!-- HEADER -->
   <header class="site-header">
-    <div class="tag">AI · Профилирование v4.0</div>
+    <div class="tag">AI · Профилирование v3.0</div>
     <h1>ИИ тебя раскусил</h1>
-    <p class="subtitle">Глубокий анализ твоих паттернов поведения</p>
+    <p class="subtitle">Холодный анализ твоих паттернов поведения</p>
   </header>
 
-  <!-- START SCREEN -->
+  <!-- ══════════ START ══════════ -->
   <div id="screen-start" class="screen active">
     <div class="card">
       <div class="section-title">Что произойдёт</div>
       <div class="start-list">
-        <div class="start-list-item"><span class="dot">▸</span><span>4 адаптивных вопроса — ветвление на основе ответов</span></div>
-        <div class="start-list-item"><span class="dot">▸</span><span>Дилеммы, ситуации, шкалы и проективные вопросы</span></div>
+        <div class="start-list-item"><span class="dot">▸</span><span>8 вопросов — по одному на экран</span></div>
         <div class="start-list-item"><span class="dot">▸</span><span>ИИ анализирует ответы и скорость реакций</span></div>
         <div class="start-list-item"><span class="dot">▸</span><span>Тип личности, предсказуемость, жёсткий разбор</span></div>
         <div class="start-list-item"><span class="dot">▸</span><span>После — можно задать ИИ любой вопрос о себе</span></div>
@@ -570,7 +540,7 @@
         </div>
       </div>
       <div id="timer-mode-hint" style="display:none; font-size:11px; color:var(--muted); margin-top:8px;">
-        ⚡ На каждый ответ — 15 секунд. Не успел — выбор случайный.
+        ⚡ На каждый ответ — 10 секунд. Не успел — выбор случайный.
       </div>
     </div>
 
@@ -580,16 +550,16 @@
     </div>
 
     <button class="btn btn-primary" onclick="startTest()">НАЧАТЬ АНАЛИЗ</button>
-    <p class="start-note">Результат сохраняется локально</p>
+    <p class="start-note">Результат сохраняется локально · двойной API для надёжности</p>
   </div>
 
-  <!-- QUESTION SCREEN -->
+  <!-- ══════════ QUESTION ══════════ -->
   <div id="screen-question" class="screen">
     <div class="progress-bar-wrap">
       <div class="progress-bar-track">
         <div class="progress-bar-fill" id="progress-fill"></div>
       </div>
-      <div class="progress-label" id="progress-label">1 / 4</div>
+      <div class="progress-label" id="progress-label">1 / 8</div>
       <div class="progress-time" id="progress-time"></div>
     </div>
     <div class="timer-wrap" id="timer-wrap">
@@ -597,23 +567,23 @@
       <div class="timer-track">
         <div class="timer-fill" id="timer-fill"></div>
       </div>
-      <span class="timer-val" id="timer-val">15</span>
+      <span class="timer-val" id="timer-val">10</span>
     </div>
     <div class="card">
       <div class="question-num" id="q-num">Вопрос 1</div>
       <div class="question-text" id="q-text"></div>
-      <div id="q-options-container"></div>
+      <div class="options" id="q-options"></div>
     </div>
   </div>
 
-  <!-- ANALYZING SCREEN -->
+  <!-- ══════════ ANALYZING ══════════ -->
   <div id="screen-analyzing" class="screen">
     <div class="card">
       <div class="analyzing-wrap">
         <div class="spinner"></div>
         <div class="analyzing-steps">
-          <div class="analyzing-step" id="step-1">▸ анализирую ответы...</div>
-          <div class="analyzing-step" id="step-2">▸ выявляю паттерны...</div>
+          <div class="analyzing-step" id="step-1">▸ собираю данные...</div>
+          <div class="analyzing-step" id="step-2">▸ ищу поведенческие паттерны...</div>
           <div class="analyzing-step" id="step-3">▸ сравниваю с профилями...</div>
           <div class="analyzing-step" id="step-4">▸ замеряю скорость реакций...</div>
           <div class="analyzing-step" id="step-5">▸ формирую заключение...</div>
@@ -623,9 +593,10 @@
     </div>
   </div>
 
-  <!-- RESULT SCREEN -->
+  <!-- ══════════ RESULT ══════════ -->
   <div id="screen-result" class="screen">
-    <!-- Type + Predictability -->
+
+    <!-- Тип + предсказуемость -->
     <div class="card" style="animation: pulseGlow 3s ease infinite;">
       <div class="result-type-label">Твой тип</div>
       <div class="result-type" id="r-type">—</div>
@@ -638,7 +609,7 @@
       </div>
     </div>
 
-    <!-- Timing -->
+    <!-- Скорость ответов -->
     <div class="card" id="timing-card" style="display:none">
       <div class="section-title">Скорость реакций</div>
       <div class="timing-row" id="timing-chips"></div>
@@ -652,7 +623,7 @@
       <button class="tab-btn" onclick="switchTab('compare',this)">ИСТОРИЯ</button>
     </div>
 
-    <!-- TAB: Analysis -->
+    <!-- TAB: Анализ -->
     <div class="tab-panel active" id="tab-analysis">
       <div class="card">
         <div class="section-title">Анализ паттернов</div>
@@ -664,7 +635,7 @@
       </div>
     </div>
 
-    <!-- TAB: Radar -->
+    <!-- TAB: Радар -->
     <div class="tab-panel" id="tab-radar">
       <div class="card">
         <div class="section-title">Психологический профиль</div>
@@ -675,7 +646,7 @@
       </div>
     </div>
 
-    <!-- TAB: Stats -->
+    <!-- TAB: Сравнение -->
     <div class="tab-panel" id="tab-stats">
       <div class="card">
         <div class="section-title">Таких как ты среди прошедших</div>
@@ -686,6 +657,7 @@
           <span id="stats-your-share" style="margin-left:auto;color:var(--highlight);font-weight:700;font-size:13px;">—</span>
         </div>
       </div>
+      <!-- Оценка точности другом -->
       <div class="card" style="margin-top:16px">
         <div class="section-title">Насколько точно тебя описали?</div>
         <div class="friend-rating-wrap" id="friend-rating-wrap"></div>
@@ -694,7 +666,7 @@
       </div>
     </div>
 
-    <!-- TAB: Compare -->
+    <!-- TAB: История + Сравнение -->
     <div class="tab-panel" id="tab-compare">
       <div class="card">
         <div class="section-title">Сравнить два прохождения</div>
@@ -716,7 +688,9 @@
       </div>
     </div>
 
-    <!-- Share -->
+    <div class="disclaimer">Ты сейчас, скорее всего, не полностью согласен. Это нормально.</div>
+
+    <!-- Поделиться -->
     <div class="card">
       <div class="section-title">Поделиться</div>
       <div class="share-compact">
@@ -729,7 +703,7 @@
       <button class="btn btn-outline" onclick="nativeShare()" style="margin-top:10px;">ОТПРАВИТЬ ДРУГУ</button>
     </div>
 
-    <!-- AI Chat -->
+    <!-- AI Чат -->
     <div class="card">
       <div class="section-title">Спроси систему о себе</div>
       <div class="chat-messages" id="chat-messages"></div>
@@ -746,7 +720,7 @@
     </div>
   </div>
 
-  <!-- FULL HISTORY SCREEN -->
+  <!-- ══════════ FULL HISTORY ══════════ -->
   <div id="screen-history" class="screen">
     <div class="card">
       <div class="section-title">История прохождений</div>
@@ -758,136 +732,47 @@
     </div>
   </div>
 
-  <!-- ERROR SCREEN -->
+  <!-- ══════════ ERROR ══════════ -->
   <div id="screen-error" class="screen">
     <div class="error-box" id="error-msg"></div>
     <div class="api-status" id="api-status-info"></div>
     <button class="btn btn-outline" onclick="resetTest()">ПОПРОБОВАТЬ СНОВА</button>
   </div>
 
-  <footer class="site-footer">SYSTEM · AI PROFILING v4.0</footer>
+  <footer class="site-footer">SYSTEM · AI PROFILING v3.0 · DUAL API</footer>
 </div>
 
 <script>
-// =============================================
-// КОНФИГУРАЦИЯ
-// =============================================
-const API_KEYS = [
-  "G9CuVLq1Sfw7BZr4kSBuCReNrHvQNsno",
-  "9GD4i61YFOjDaMCpcs9XF2clvlYRf7EZ"
+/* ═══════════════════════════════════════════════
+   КОНФИГУРАЦИЯ
+═══════════════════════════════════════════════ */
+const API_KEYS  = [
+  "G9CuVLq1Sfw7BZr4kSBuCReNrHvQNsno",   // Primary
+  "9GD4i61YFOjDaMCpcs9XF2clvlYRf7EZ"    // Fallback
 ];
-const API_URL = "https://api.mistral.ai/v1/chat/completions";
+const API_URL   = "https://api.mistral.ai/v1/chat/completions";
 const API_MODEL = "mistral-small-latest";
 
-const LS_RESULT = "user_result_v4";
-const LS_HISTORY = "user_history_v4";
-const LS_RATINGS = "friend_ratings_v4";
-const LS_CHAT = "chat_messages_v4";
+const LS_RESULT  = "user_result_v3";
+const LS_HISTORY = "user_history_v3";
+const LS_RATINGS = "friend_ratings_v3";
+const LS_CHAT    = "chat_messages_v3";
 
 const CHAT_LIMIT = 5;
 
-// Ветвление вопросов (4 вопроса с 2 вариантами ветвления)
-const QUESTION_TREE = {
-  start: {
-    question: "Ты на перекрёстке: друг просит подвезти его срочно, но ты уже опоздываешь на важную встречу. Что делаешь?",
-    options: [
-      { text: "Подвезу друга — встречу можно перенести", next: "q1a" },
-      { text: "Еду на встречу — друг поймёт", next: "q1b" }
-    ],
-    type: "dilemma"
-  },
-  q1a: {
-    question: "Ты в 3 часа ночи один дома. Что делаешь?",
-    options: [
-      { text: "Сплю — зачем нарушать режим?", next: "q2a" },
-      { text: "Читаю/работаю/смотрю фильм — ночью лучше думается", next: "q2b" }
-    ],
-    type: "projective"
-  },
-  q1b: {
-    question: "Тебе написали в 23:00 с просьбой помочь с срочной работой. Как реагируешь?",
-    options: [
-      { text: "Отвечаю: 'Сейчас не могу, но завтра помогу'", next: "q2c" },
-      { text: "Берусь сразу — если срочно, значит важно", next: "q2d" }
-    ],
-    type: "situational"
-  },
-  q2a: {
-    question: "Насколько ты управляешь своей жизнью? (1 — хаос, 10 — полный контроль)",
-    type: "scale",
-    min: 1,
-    max: 10,
-    next: "q3a"
-  },
-  q2b: {
-    question: "Что бы ты сделал, если бы тебя никто не видел?",
-    options: [
-      { text: "То же, что и всегда — мне нечего скрывать", next: "q3b" },
-      { text: "Что-то запретное — ради адреналина", next: "q3c" }
-    ],
-    type: "projective"
-  },
-  q2c: {
-    question: "Насколько ты зависим от мнения других? (1 — совсем не зависим, 10 — очень зависим)",
-    type: "scale",
-    min: 1,
-    max: 10,
-    next: "q3d"
-  },
-  q2d: {
-    question: "Ты нашел кошелёк с деньгами и документами. Что делаешь?",
-    options: [
-      { text: "Возвращаю владельцу — это правильно", next: "q3e" },
-      { text: "Забираю деньги, документы выкидываю", next: "q3f" }
-    ],
-    type: "dilemma"
-  },
-  q3a: {
-    question: "Ты в компании друзей. Все смеются над шуткой, которая тебе не кажется смешной. Что делаешь?",
-    options: [
-      { text: "Смеюсь вместе с ними — не хочется выделяться", next: "end" },
-      { text: "Молчу или говорю, что не смешно", next: "end" }
-    ],
-    type: "situational"
-  },
-  q3b: {
-    question: "Насколько ты честен с собой? (1 — часто обманываю себя, 10 — всегда честен)",
-    type: "scale",
-    min: 1,
-    max: 10,
-    next: "end"
-  },
-  q3c: {
-    question: "Ты нашел кошелёк с деньгами и документами. Что делаешь?",
-    options: [
-      { text: "Возвращаю владельцу — это правильно", next: "end" },
-      { text: "Забираю деньги, документы выкидываю", next: "end" }
-    ],
-    type: "dilemma"
-  },
-  q3d: {
-    question: "Ты в 3 часа ночи один дома. Что делаешь?",
-    options: [
-      { text: "Сплю — зачем нарушать режим?", next: "end" },
-      { text: "Читаю/работаю/смотрю фильм — ночью лучше думается", next: "end" }
-    ],
-    type: "projective"
-  },
-  q3e: {
-    question: "Насколько ты управляешь своей жизнью? (1 — хаос, 10 — полный контроль)",
-    type: "scale",
-    min: 1,
-    max: 10,
-    next: "end"
-  },
-  q3f: {
-    question: "Насколько ты честен с собой? (1 — часто обманываю себя, 10 — всегда честен)",
-    type: "scale",
-    min: 1,
-    max: 10,
-    next: "end"
-  }
-};
+/* ═══════════════════════════════════════════════
+   ВОПРОСЫ
+═══════════════════════════════════════════════ */
+const QUESTIONS = [
+  { text: "Когда у тебя есть важное дело — ты…", options: ["Делаю сразу, пока есть энергия","Откладываю, потом делаю в последний момент","Планирую, разбиваю на шаги","Жду подходящего настроения"] },
+  { text: "Ты теряешь интерес к новым вещам…", options: ["Быстро — как только понял суть","Только если становится слишком сложно","Почти никогда — я доделываю всё до конца","Когда появляется что-то интереснее"] },
+  { text: "Когда что-то идёт не по плану, ты…", options: ["Адаптируюсь на ходу","Злюсь или расстраиваюсь, но потом двигаюсь дальше","Пересматриваю весь план заново","Бросаю — значит, не судьба"] },
+  { text: "После долгого дня среди людей ты…", options: ["Хочу побыть один — перезарядиться","Чувствую прилив энергии, хочу общаться ещё","Зависит от компании","Устаю, но не от людей, а от себя"] },
+  { text: "Когда ты принимаешь решение, ты больше опираешься на…", options: ["Логику и факты","Интуицию и ощущения","Мнение людей, которым доверяю","Долго анализирую и всё равно сомневаюсь"] },
+  { text: "Что ближе всего описывает твои цели?", options: ["У меня есть конкретный план на годы вперёд","Примерное направление — без жёстких рамок","Живу настоящим, цели появляются сами","Цели есть, но я редко к ним двигаюсь"] },
+  { text: "Как ты относишься к критике в свой адрес?", options: ["Анализирую, беру полезное, остальное игнорирую","Принимаю близко к сердцу, долго переживаю","Защищаюсь и оправдываюсь","Делаю вид, что всё нормально, но внутри задевает"] },
+  { text: "Если честно — что движет тобой чаще всего?", options: ["Желание доказать что-то себе или другим","Любопытство и интерес к процессу","Страх потерять то, что есть","Лень с редкими вспышками мотивации"] }
+];
 
 const RADAR_AXES = [
   { label: "Целеустремлённость", key: "determination" },
@@ -899,28 +784,28 @@ const RADAR_AXES = [
 ];
 
 const TYPE_STATS = {
-  "npc": { label: "NPC", base: 41 },
-  "второстепенный персонаж": { label: "Второстепенный", base: 35 },
-  "главный герой": { label: "Главный герой", base: 24 }
+  "npc":                    { label: "NPC",             base: 41 },
+  "второстепенный персонаж":{ label: "Второстепенный",  base: 35 },
+  "главный герой":          { label: "Главный герой",   base: 24 }
 };
 
-// =============================================
-// СОСТОЯНИЕ
-// =============================================
-let currentQ = "start";
-let userAnswers = [];
-let timings = [];
+/* ═══════════════════════════════════════════════
+   СОСТОЯНИЕ
+═══════════════════════════════════════════════ */
+let currentQ      = 0;
+let userAnswers   = [];
+let timings       = [];
 let questionStart = 0;
 let currentResult = null;
-let timerMode = false;
+let timerMode     = false;
 let timerInterval = null;
-let timerLeft = 15;
-let chatHistory = [];
-let chatUsed = 0;
+let timerLeft     = 10;
+let chatHistory   = [];   // контекст чата
+let chatUsed      = 0;
 
-// =============================================
-// УТИЛИТЫ
-// =============================================
+/* ═══════════════════════════════════════════════
+   УТИЛИТЫ
+═══════════════════════════════════════════════ */
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById('screen-' + id);
@@ -934,7 +819,7 @@ function showScreen(id) {
 function stripMarkdown(text) {
   if (!text) return '';
   return text
-    .replace(/\*\*(.+?)\*\*/gs, '$1').replace(/\*(.+?)\*/gs, '$1')
+    .replace(/\*\*(.+?)\*\*/gs, '$1').replace(/\*(.+?)\*/gs,  '$1')
     .replace(/__(.+?)__/gs, '$1').replace(/_(.+?)_/gs, '$1')
     .replace(/#+\s?/g, '').replace(/`{1,3}([^`]+)`{1,3}/g, '$1')
     .replace(/\[(.+?)\]\(.+?\)/g, '$1').replace(/^\s*[-*]\s+/gm, '')
@@ -943,51 +828,61 @@ function stripMarkdown(text) {
 
 function formatDate(ts) {
   const d = new Date(ts);
-  return d.toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' }) +
-    ' ' + d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'})
+       + ' ' + d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
 }
 
 function formatMs(ms) {
   return ms < 1000 ? ms + ' мс' : (ms / 1000).toFixed(1) + ' с';
 }
 
-// =============================================
-// DUAL API
-// =============================================
+/* ═══════════════════════════════════════════════
+   DUAL API: запрос с автоматическим fallback
+═══════════════════════════════════════════════ */
+let lastUsedApiIndex = -1;
+
 async function callMistralAPI(messages, maxTokens = 900) {
   let lastError = null;
+
   for (let i = 0; i < API_KEYS.length; i++) {
     const key = API_KEYS[i];
     const isFirst = i === 0;
+
     if (!isFirst) {
       const note = document.getElementById('api-note');
       if (note) note.textContent = '⟳ Основной API недоступен, переключаюсь на резервный...';
     }
+
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
         body: JSON.stringify({ model: API_MODEL, messages, temperature: 0.72, max_tokens: maxTokens })
       });
+
       if (!response.ok) {
         const err = await response.json().catch(() => ({}));
         throw new Error('HTTP ' + response.status + ': ' + (err.message || response.statusText));
       }
+
       const data = await response.json();
+      lastUsedApiIndex = i;
       return data.choices?.[0]?.message?.content || '';
-    } catch (e) {
+
+    } catch(e) {
       lastError = e;
       console.warn('API[' + i + '] failed:', e.message);
     }
   }
+
   throw new Error('Оба API недоступны. ' + (lastError?.message || ''));
 }
 
-// =============================================
-// ИСТОРИЯ
-// =============================================
+/* ═══════════════════════════════════════════════
+   ИСТОРИЯ
+═══════════════════════════════════════════════ */
 function getHistory() {
-  try { return JSON.parse(localStorage.getItem(LS_HISTORY) || '[]'); } catch (e) { return []; }
+  try { return JSON.parse(localStorage.getItem(LS_HISTORY) || '[]'); } catch(e) { return []; }
 }
 
 function saveToHistory(result) {
@@ -1000,8 +895,7 @@ function saveToHistory(result) {
     analysis: result.analysis,
     conclusion: result.conclusion,
     radar: result.radar || null,
-    timings: result.timings || [],
-    path: result.path || []
+    timings: result.timings || []
   };
   h.unshift(entry);
   if (h.length > 10) h.length = 10;
@@ -1009,7 +903,7 @@ function saveToHistory(result) {
 }
 
 function renderHistoryList(containerId, activeId) {
-  const h = getHistory();
+  const h    = getHistory();
   const wrap = document.getElementById(containerId);
   if (!wrap) return;
   if (!h.length) { wrap.innerHTML = '<div class="history-empty">История пуста</div>'; return; }
@@ -1047,15 +941,15 @@ function clearHistory() {
 }
 
 function initStartHistory() {
-  const h = getHistory();
+  const h    = getHistory();
   const card = document.getElementById('history-card');
   if (h.length) { card.style.display = ''; renderHistoryList('history-list', null); }
   else card.style.display = 'none';
 }
 
-// =============================================
-// TIMER MODE
-// =============================================
+/* ═══════════════════════════════════════════════
+   TIMER MODE
+═══════════════════════════════════════════════ */
 function toggleTimerMode() {
   timerMode = document.getElementById('timer-toggle').checked;
   document.getElementById('timer-toggle-label').textContent = timerMode ? 'вкл' : 'выкл';
@@ -1064,10 +958,10 @@ function toggleTimerMode() {
 
 function startTimer(onExpire) {
   clearTimer();
-  timerLeft = 15;
+  timerLeft = 10;
   const wrap = document.getElementById('timer-wrap');
   const fill = document.getElementById('timer-fill');
-  const val = document.getElementById('timer-val');
+  const val  = document.getElementById('timer-val');
   wrap.classList.add('visible');
   fill.style.width = '100%';
   fill.style.background = 'var(--highlight)';
@@ -1076,7 +970,7 @@ function startTimer(onExpire) {
   timerInterval = setInterval(() => {
     timerLeft--;
     val.textContent = timerLeft;
-    fill.style.width = (timerLeft / 15 * 100) + '%';
+    fill.style.width = (timerLeft / 10 * 100) + '%';
     if (timerLeft <= 3) fill.style.background = '#f08080';
     if (timerLeft <= 0) {
       clearTimer();
@@ -1091,9 +985,9 @@ function clearTimer() {
   if (wrap) wrap.classList.remove('visible');
 }
 
-// =============================================
-// СТАРТ / СБРОС
-// =============================================
+/* ═══════════════════════════════════════════════
+   СТАРТ / СБРОС
+═══════════════════════════════════════════════ */
 function startTest() {
   const saved = localStorage.getItem(LS_RESULT);
   if (saved) {
@@ -1104,11 +998,9 @@ function startTest() {
       renderResult(data);
       showScreen('result');
       return;
-    } catch (e) { localStorage.removeItem(LS_RESULT); }
+    } catch(e) { localStorage.removeItem(LS_RESULT); }
   }
-  currentQ = "start";
-  userAnswers = [];
-  timings = [];
+  currentQ = 0; userAnswers = []; timings = [];
   showScreen('question');
   renderQuestion();
 }
@@ -1117,150 +1009,74 @@ function resetTest() {
   localStorage.removeItem(LS_RESULT);
   localStorage.removeItem(LS_CHAT);
   clearTimer();
-  currentQ = "start";
-  userAnswers = [];
-  timings = [];
-  currentResult = null;
-  chatHistory = [];
-  chatUsed = 0;
+  currentQ = 0; userAnswers = []; timings = [];
+  currentResult = null; chatHistory = []; chatUsed = 0;
   switchTabById('analysis');
   initStartHistory();
   showScreen('start');
 }
 
-// =============================================
-// ВОПРОСЫ (ветвление)
-// =============================================
+/* ═══════════════════════════════════════════════
+   ВОПРОСЫ
+═══════════════════════════════════════════════ */
 function renderQuestion() {
-  const q = QUESTION_TREE[currentQ];
-  const total = 4; // Всего 4 вопроса
-  const progress = Object.keys(QUESTION_TREE).indexOf(currentQ) + 1;
-  document.getElementById('progress-fill').style.width = (progress / total * 100) + '%';
-  document.getElementById('progress-label').textContent = progress + ' / ' + total;
-  document.getElementById('progress-time').textContent = '';
-  document.getElementById('q-num').textContent = 'Вопрос ' + progress;
-  document.getElementById('q-text').textContent = q.question;
+  const q     = QUESTIONS[currentQ];
+  const total = QUESTIONS.length;
+  document.getElementById('progress-fill').style.width  = (currentQ / total * 100) + '%';
+  document.getElementById('progress-label').textContent = (currentQ + 1) + ' / ' + total;
+  document.getElementById('progress-time').textContent  = '';
+  document.getElementById('q-num').textContent          = 'Вопрос ' + (currentQ + 1);
+  document.getElementById('q-text').textContent         = q.text;
 
-  const container = document.getElementById('q-options-container');
-  container.innerHTML = '';
-
-  if (q.type === "scale") {
-    const sliderWrap = document.createElement('div');
-    sliderWrap.className = 'slider-wrap';
-    const slider = document.createElement('input');
-    slider.type = 'range';
-    slider.min = q.min;
-    slider.max = q.max;
-    slider.value = Math.floor((q.min + q.max) / 2);
-    slider.className = 'slider';
-    slider.id = 'slider-' + currentQ;
-    const labels = document.createElement('div');
-    labels.className = 'slider-labels';
-    labels.innerHTML = `<span>${q.min}</span><span>${q.max}</span>`;
-    const value = document.createElement('div');
-    value.className = 'slider-value';
-    value.id = 'slider-value-' + currentQ;
-    value.textContent = slider.value;
-    slider.oninput = () => {
-      value.textContent = slider.value;
-    };
-    sliderWrap.appendChild(slider);
-    sliderWrap.appendChild(labels);
-    sliderWrap.appendChild(value);
-    container.appendChild(sliderWrap);
-
+  const wrap = document.getElementById('q-options');
+  wrap.innerHTML = '';
+  q.options.forEach(opt => {
     const btn = document.createElement('button');
-    btn.className = 'btn btn-primary btn-sm';
-    btn.textContent = 'ДАЛЕЕ';
-    btn.style.marginTop = '12px';
-    btn.onclick = () => {
-      const val = parseInt(slider.value);
-      chooseAnswer(`Шкала: ${val}`, btn, val);
-    };
-    container.appendChild(btn);
-  } else {
-    q.options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'option-btn';
-      btn.textContent = opt.text;
-      btn.onclick = () => chooseAnswer(opt.text, btn, null, opt.next);
-      container.appendChild(btn);
-    });
-  }
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.onclick = () => chooseAnswer(opt, btn);
+    wrap.appendChild(btn);
+  });
 
   questionStart = Date.now();
 
   if (timerMode) {
     startTimer(() => {
-      const btns = document.querySelectorAll('.option-btn, .btn-primary');
+      // время вышло — случайный выбор
+      const btns = document.querySelectorAll('.option-btn');
       const rand = btns[Math.floor(Math.random() * btns.length)];
-      if (rand) {
-        if (rand.classList.contains('option-btn')) {
-          const opt = q.options.find(o => o.text === rand.textContent);
-          chooseAnswer(rand.textContent + ' [авто]', rand, null, opt?.next);
-        } else {
-          const slider = document.getElementById('slider-' + currentQ);
-          if (slider) {
-            const val = parseInt(slider.value);
-            chooseAnswer(`Шкала: ${val} [авто]`, rand, val);
-          }
-        }
-      }
+      if (rand) chooseAnswer(rand.textContent + ' [авто]', rand);
     });
   }
 }
 
-function chooseAnswer(answer, btn, scaleValue = null, nextQ = null) {
+function chooseAnswer(answer, btn) {
   clearTimer();
   const elapsed = Date.now() - questionStart;
   timings.push(elapsed);
-  document.querySelectorAll('.option-btn, .btn-primary').forEach(b => b.onclick = null);
-  if (btn.classList.contains('option-btn')) {
-    btn.classList.add('selected');
-  }
+  document.querySelectorAll('.option-btn').forEach(b => b.onclick = null);
+  btn.classList.add('selected');
   document.getElementById('progress-time').textContent = formatMs(elapsed);
-
-  let answerData = {
-    question: QUESTION_TREE[currentQ].question,
-    answer: answer.replace(' [авто]', '').trim(),
-    time_ms: elapsed,
-    type: QUESTION_TREE[currentQ].type
-  };
-  if (scaleValue !== null) {
-    answerData.scaleValue = scaleValue;
-  }
-  userAnswers.push(answerData);
-
-  if (nextQ) {
-    currentQ = nextQ;
-  } else if (QUESTION_TREE[currentQ].next) {
-    currentQ = QUESTION_TREE[currentQ].next;
-  } else {
-    currentQ = "end";
-  }
-
+  userAnswers.push({ question: QUESTIONS[currentQ].text, answer, time_ms: elapsed });
   setTimeout(() => {
-    if (currentQ === "end") {
-      startAnalyzing();
-    } else {
-      renderQuestion();
-    }
+    currentQ++;
+    currentQ < QUESTIONS.length ? renderQuestion() : startAnalyzing();
   }, 350);
 }
 
-// =============================================
-// АНАЛИЗ
-// =============================================
+/* ═══════════════════════════════════════════════
+   АНАЛИЗ
+═══════════════════════════════════════════════ */
 async function startAnalyzing() {
   showScreen('analyzing');
   document.getElementById('api-note').textContent = '';
 
-  const steps = ['step-1', 'step-2', 'step-3', 'step-4', 'step-5'];
+  const steps  = ['step-1','step-2','step-3','step-4','step-5'];
   const delays = [250, 800, 1500, 2200, 3000];
   steps.forEach((id, i) => {
     setTimeout(() => {
       document.getElementById(id).classList.add('visible');
-      if (i > 0) document.getElementById(steps[i - 1]).classList.add('done');
+      if (i > 0) document.getElementById(steps[i-1]).classList.add('done');
     }, delays[i]);
   });
 
@@ -1269,21 +1085,20 @@ async function startAnalyzing() {
     await new Promise(r => setTimeout(r, 3600));
     document.getElementById('step-5').classList.add('done');
 
-    result.timings = timings;
-    result.answers = userAnswers;
+    result.timings   = timings;
+    result.answers   = userAnswers;
     result.timestamp = Date.now();
-    result.id = Date.now();
-    result.path = userAnswers.map(a => a.answer);
+    result.id        = Date.now();
 
     localStorage.setItem(LS_RESULT, JSON.stringify(result));
     saveToHistory(result);
     currentResult = result;
-    chatHistory = [];
-    chatUsed = 0;
+    chatHistory   = [];
+    chatUsed      = 0;
     loadChatSession();
     renderResult(result);
     setTimeout(() => showScreen('result'), 400);
-  } catch (err) {
+  } catch(err) {
     await new Promise(r => setTimeout(r, 1500));
     document.getElementById('error-msg').textContent = '⚠ ' + err.message;
     document.getElementById('api-status-info').innerHTML =
@@ -1292,38 +1107,38 @@ async function startAnalyzing() {
   }
 }
 
-// =============================================
-// MISTRAL: основной запрос
-// =============================================
+/* ═══════════════════════════════════════════════
+   MISTRAL: основной запрос
+═══════════════════════════════════════════════ */
 async function fetchMistralResult() {
-  const avgTime = timings.length ? Math.round(timings.reduce((a, b) => a + b, 0) / timings.length) : 0;
-  const fastQ = timings.map((t, i) => t < 1500 ? i + 1 : null).filter(Boolean);
-  const slowQ = timings.map((t, i) => t > 5000 ? i + 1 : null).filter(Boolean);
+  const avgTime = timings.length ? Math.round(timings.reduce((a,b)=>a+b,0)/timings.length) : 0;
+  const fastQ   = timings.map((t,i)=>t<1500?i+1:null).filter(Boolean);
+  const slowQ   = timings.map((t,i)=>t>5000?i+1:null).filter(Boolean);
 
-  const answersText = userAnswers.map((a, i) =>
-    `${i + 1}. ${a.question}\n   Ответ: ${a.answer}\n   Тип: ${a.type}\n   ${a.scaleValue ? `Шкала: ${a.scaleValue}/10\n` : ''}   Время: ${formatMs(a.time_ms)}${a.answer.includes('[авто]') ? ' (не успел ответить вовремя)' : ''}`
+  const answersText = userAnswers.map((a,i)=>
+    `${i+1}. ${a.question}\n   Ответ: ${a.answer.replace(' [авто]','').trim()}\n   Время: ${formatMs(a.time_ms)}${a.answer.includes('[авто]')?' (не успел ответить вовремя)':''}`
   ).join('\n\n');
 
-  const timingNote = `\nСредняя скорость ответа: ${formatMs(avgTime)}.` +
-    (fastQ.length ? ` Быстрые (импульсивные) ответы: вопросы ${fastQ.join(',')}.` : '') +
-    (slowQ.length ? ` Долгое раздумье: вопросы ${slowQ.join(',')}.` : '') +
-    (timerMode ? ' Пользователь выбрал режим таймера.' : '');
+  const timingNote = `\nСредняя скорость ответа: ${formatMs(avgTime)}.`
+    + (fastQ.length ? ` Быстрые (импульсивные) ответы: вопросы ${fastQ.join(',')}.` : '')
+    + (slowQ.length ? ` Долгое раздумье: вопросы ${slowQ.join(',')}.` : '')
+    + (timerMode    ? ' Пользователь выбрал режим таймера.' : '');
 
-  const systemPrompt = `Ты — холодная аналитическая система, которая выявляет паттерны поведения человека. Учитывай содержание ответов, тип вопросов (дилеммы, проективные, ситуативные, шкалы) и скорость реакции.
+  const systemPrompt = `Ты — холодная аналитическая система, которая выявляет паттерны поведения человека. Учитывай содержание ответов и скорость реакции.
 
 Выдай ответ СТРОГО в формате JSON без лишнего текста:
 {
   "type": "NPC | второстепенный персонаж | главный герой",
   "predictability": 73,
   "analysis": ["Паттерн 1","Паттерн 2","Паттерн 3","Паттерн 4"],
-  "conclusion": "Жёсткое заключение 2–3 предложения. Последняя фраза — вызывает сомнение в себе.",
+  "conclusion": "Жёсткое заключение 2–3 предложения. Последняя — вызывает сомнение в себе.",
   "radar": { "determination":70,"impulsivity":40,"sociality":55,"rationalism":65,"resilience":50,"introspection":75 }
 }
 Правила: никакого markdown, никаких звёздочек, только валидный JSON. type — ТОЛЬКО одно из трёх значений.`;
 
   const content = await callMistralAPI([
     { role: 'system', content: systemPrompt },
-    { role: 'user', content: `Данные пользователя:\n${answersText}\n${timingNote}` }
+    { role: 'user',   content: `Данные пользователя:\n${answersText}\n${timingNote}` }
   ], 900);
 
   const jsonMatch = content.match(/\{[\s\S]*\}/);
@@ -1331,11 +1146,11 @@ async function fetchMistralResult() {
 
   let parsed;
   try { parsed = JSON.parse(jsonMatch[0]); }
-  catch (e) { throw new Error('Ошибка разбора ответа ИИ.'); }
+  catch(e) { throw new Error('Ошибка разбора ответа ИИ.'); }
 
-  parsed.type = stripMarkdown(parsed.type || '');
+  parsed.type       = stripMarkdown(parsed.type       || '');
   parsed.conclusion = stripMarkdown(parsed.conclusion || '');
-  parsed.analysis = (parsed.analysis || []).map(a => stripMarkdown(a));
+  parsed.analysis   = (parsed.analysis || []).map(a => stripMarkdown(a));
 
   if (!parsed.type || !parsed.predictability || !parsed.analysis?.length || !parsed.conclusion)
     throw new Error('Неполный ответ от ИИ. Попробуй снова.');
@@ -1343,48 +1158,63 @@ async function fetchMistralResult() {
   return parsed;
 }
 
-// =============================================
-// РЕНДЕР РЕЗУЛЬТАТА
-// =============================================
+/* ═══════════════════════════════════════════════
+   РЕНДЕР РЕЗУЛЬТАТА
+═══════════════════════════════════════════════ */
 function renderResult(data) {
   const pct = Math.min(100, Math.max(0, parseInt(data.predictability) || 0));
 
+  // Анимированный счётчик предсказуемости
   document.getElementById('r-type').textContent = data.type.toUpperCase();
   animateCounter('r-percent', 0, pct, '%', 1100);
   setTimeout(() => { document.getElementById('r-bar').style.width = pct + '%'; }, 350);
 
+  // Анализ
   const wrap = document.getElementById('r-analysis');
   wrap.innerHTML = '';
   (data.analysis || []).forEach((item, i) => {
     const div = document.createElement('div');
-    div.className = 'result-analysis-item';
+    div.className   = 'result-analysis-item';
     div.textContent = item;
     wrap.appendChild(div);
     setTimeout(() => div.classList.add('shown'), 300 + i * 180);
   });
 
+  // Typewriter заключение
   typewriterEffect('r-conclusion', data.conclusion || '');
 
+  // Скорость
   renderTimings(data.timings || []);
 
+  // Радар
   if (data.radar) renderRadar(data.radar, 'radar-svg', 'radar-legend');
 
+  // Статистика
   renderStats(data.type);
 
+  // Поделиться
   buildShare(data);
 
+  // Оценка точности
   renderFriendRating(data.id || 'current');
 
+  // История для сравнения
   renderCompareList();
+
+  // Чат
+  restoreChatUI();
 
   switchTabById('analysis');
 }
 
+/* ═══════════════════════════════════════════════
+   АНИМИРОВАННЫЙ СЧЁТЧИК
+═══════════════════════════════════════════════ */
 function animateCounter(id, from, to, suffix, duration) {
-  const el = document.getElementById(id);
+  const el    = document.getElementById(id);
   const start = performance.now();
   function step(now) {
-    const t = Math.min((now - start) / duration, 1);
+    const t   = Math.min((now - start) / duration, 1);
     const val = Math.round(from + (to - from) * easeOut(t));
     el.textContent = val + suffix;
     if (t < 1) requestAnimationFrame(step);
@@ -1394,6 +1224,9 @@ function animateCounter(id, from, to, suffix, duration) {
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
+/* ═══════════════════════════════════════════════
+   TYPEWRITER
+═══════════════════════════════════════════════ */
 function typewriterEffect(elementId, text) {
   const el = document.getElementById(elementId);
   el.innerHTML = '';
@@ -1413,19 +1246,22 @@ function typewriterEffect(elementId, text) {
   setTimeout(tick, 400);
 }
 
+/* ═══════════════════════════════════════════════
+   СКОРОСТЬ ОТВЕТОВ
+═══════════════════════════════════════════════ */
 function renderTimings(t) {
-  const card = document.getElementById('timing-card');
+  const card  = document.getElementById('timing-card');
   const chips = document.getElementById('timing-chips');
   if (!t || !t.length) { card.style.display = 'none'; return; }
   card.style.display = '';
   chips.innerHTML = '';
-  const avg = Math.round(t.reduce((a, b) => a + b, 0) / t.length);
+  const avg = Math.round(t.reduce((a,b)=>a+b,0)/t.length);
   const min = Math.min(...t), max = Math.max(...t);
   [
-    { label: 'Среднее', val: formatMs(avg) },
-    { label: 'Быстрейший', val: formatMs(min) },
-    { label: 'Медленнейший', val: formatMs(max) },
-    { label: 'Вопросов', val: t.length }
+    { label:'Среднее', val:formatMs(avg) },
+    { label:'Быстрейший', val:formatMs(min) },
+    { label:'Медленнейший', val:formatMs(max) },
+    { label:'Вопросов', val:t.length }
   ].forEach(it => {
     const c = document.createElement('div');
     c.className = 'timing-chip';
@@ -1434,193 +1270,74 @@ function renderTimings(t) {
   });
 }
 
+/* ═══════════════════════════════════════════════
+   RADAR CHART
+═══════════════════════════════════════════════ */
 function renderRadar(radarData, svgId, legendId, color = '#a4a71e', fillColor = 'rgba(83,144,15,0.25)') {
-  const svg = document.getElementById(svgId);
+  const svg    = document.getElementById(svgId);
   svg.innerHTML = '';
-  if (legendId) { const l = document.getElementById(legendId); if (l) l.innerHTML = ''; }
+  if (legendId) { const l = document.getElementById(legendId); if(l) l.innerHTML = ''; }
 
   const cx = 130, cy = 130, R = 90;
-  const n = RADAR_AXES.length;
+  const n  = RADAR_AXES.length;
   const angles = RADAR_AXES.map((_, i) => (Math.PI * 2 * i / n) - Math.PI / 2);
 
   function pt(r, a) { return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
   function svgEl(tag, attrs) {
     const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    Object.entries(attrs).forEach(([k,v]) => el.setAttribute(k, v));
     return el;
   }
 
-  [0.2, 0.4, 0.6, 0.8, 1.0].forEach(f => {
-    svg.appendChild(svgEl('polygon', {
-      points: angles.map(a => pt(R * f, a).join(',')).join(' '),
-      fill: 'none',
-      stroke: 'rgba(83,144,15,0.18)',
-      'stroke-width': '1'
-    }));
+  [0.2,0.4,0.6,0.8,1.0].forEach(f => {
+    svg.appendChild(svgEl('polygon', { points: angles.map(a=>pt(R*f,a).join(',')).join(' '), fill:'none', stroke:'rgba(83,144,15,0.18)', 'stroke-width':'1' }));
   });
   angles.forEach(a => {
-    const [x, y] = pt(R, a);
-    svg.appendChild(svgEl('line', {
-      x1: cx, y1: cy, x2: x, y2: y,
-      stroke: 'rgba(83,144,15,0.22)',
-      'stroke-width': '1'
-    }));
+    const [x,y] = pt(R, a);
+    svg.appendChild(svgEl('line', { x1:cx, y1:cy, x2:x, y2:y, stroke:'rgba(83,144,15,0.22)', 'stroke-width':'1' }));
   });
 
-  const values = RADAR_AXES.map(ax => Math.min(100, Math.max(0, parseFloat(radarData[ax.key] || 50))) / 100);
-  const dataPts = angles.map((a, i) => pt(R * values[i], a).join(',')).join(' ');
-  svg.appendChild(svgEl('polygon', {
-    points: dataPts,
-    fill: fillColor,
-    stroke: color,
-    'stroke-width': '2'
-  }));
-  angles.forEach((a, i) => {
-    const [x, y] = pt(R * values[i], a);
-    svg.appendChild(svgEl('circle', {
-      cx: x, cy: y, r: '4',
-      fill: '#d6ce15',
-      stroke: '#1f2605',
-      'stroke-width': '1.5'
-    }));
+  const values = RADAR_AXES.map(ax => Math.min(100,Math.max(0,parseFloat(radarData[ax.key]||50)))/100);
+  const dataPts = angles.map((a,i)=>pt(R*values[i],a).join(',')).join(' ');
+  svg.appendChild(svgEl('polygon', { points:dataPts, fill:fillColor, stroke:color, 'stroke-width':'2' }));
+  angles.forEach((a,i) => {
+    const [x,y] = pt(R*values[i],a);
+    svg.appendChild(svgEl('circle', { cx:x,cy:y,r:'4',fill:'#d6ce15',stroke:'#1f2605','stroke-width':'1.5' }));
   });
 
-  angles.forEach((a, i) => {
-    const [x, y] = pt(R + 22, a);
-    const text = svgEl('text', {
-      x, y,
-      'text-anchor': 'middle',
-      'dominant-baseline': 'middle',
-      fill: '#7a8a3a',
-      'font-size': '8.5',
-      'font-family': 'Courier New,monospace'
-    });
+  angles.forEach((a,i) => {
+    const [x,y] = pt(R+22,a);
+    const text  = svgEl('text',{ x,y,'text-anchor':'middle','dominant-baseline':'middle',fill:'#7a8a3a','font-size':'8.5','font-family':'Courier New,monospace' });
     const label = RADAR_AXES[i].label;
     if (label.length > 10) {
-      label.split(' ').forEach((w, wi) => {
-        const t = svgEl('tspan', { x, dy: wi === 0 ? '-5' : '11' });
-        t.textContent = w;
-        text.appendChild(t);
+      label.split(' ').forEach((w,wi)=>{
+        const t = svgEl('tspan',{x,dy:wi===0?'-5':'11'}); t.textContent=w; text.appendChild(t);
       });
-    } else {
-      text.textContent = label;
-    }
+    } else { text.textContent = label; }
     svg.appendChild(text);
   });
 
   if (legendId) {
     const legend = document.getElementById(legendId);
     if (legend) {
-      RADAR_AXES.forEach((ax, i) => {
+      RADAR_AXES.forEach((ax,i)=>{
         const item = document.createElement('div');
         item.className = 'radar-legend-item';
-        item.innerHTML = `<div class="radar-legend-dot" style="background:${color}"></div><span>${ax.label}: <span style="color:var(--highlight);font-weight:700">${Math.round(values[i] * 100)}%</span></span>`;
+        item.innerHTML = `<div class="radar-legend-dot" style="background:${color}"></div><span>${ax.label}: <span style="color:var(--highlight);font-weight:700">${Math.round(values[i]*100)}%</span></span>`;
         legend.appendChild(item);
       });
     }
   }
 }
 
-function renderStats(type) {
-  const nType = (type || '').toLowerCase().trim();
-  const row = document.getElementById('stats-row');
-  row.innerHTML = '';
-
-  const history = getHistory();
-  const counts = { 'npc': 0, 'второстепенный персонаж': 0, 'главный герой': 0 };
-  history.forEach(e => {
-    const k = (e.type || '').toLowerCase().trim();
-    if (counts[k] !== undefined) counts[k]++;
-  });
-
-  const totals = {};
-  Object.keys(TYPE_STATS).forEach(k => { totals[k] = TYPE_STATS[k].base + (counts[k] || 0); });
-  const sum = Object.values(totals).reduce((a, b) => a + b, 0);
-
-  Object.entries(TYPE_STATS).forEach(([key, info]) => {
-    const share = Math.round(totals[key] / sum * 100);
-    const isYou = key === nType;
-    const item = document.createElement('div');
-    item.className = 'stats-item';
-    item.innerHTML = `
-      <div class="stats-item-head">
-        <span>${info.label}${isYou ? ' ← ты' : ''}</span>
-        <span class="highlight-val">${share}%</span>
-      </div>
-      <div class="stats-bar-track"><div class="stats-bar-fill" data-val="${share}"></div></div>`;
-    row.appendChild(item);
-  });
-
-  setTimeout(() => {
-    row.querySelectorAll('.stats-bar-fill').forEach(b => {
-      b.style.width = b.dataset.val + '%';
-    });
-  }, 400);
-
-  const yourShare = Math.round((totals[nType] || 0) / sum * 100);
-  document.getElementById('stats-your-type').textContent = (TYPE_STATS[nType]?.label || type).toUpperCase();
-  document.getElementById('stats-your-share').textContent = 'Таких как ты — ' + yourShare + '%';
-}
-
-function buildShare(data) {
-  const summary = document.getElementById('share-summary');
-  if (summary) {
-    summary.textContent = `${data.type.toUpperCase()} · Предсказуемость ${data.predictability}%`;
-  }
-  try {
-    const payload = {
-      type: data.type,
-      predictability: data.predictability,
-      analysis: data.analysis,
-      conclusion: data.conclusion
-    };
-    const encoded = btoa(encodeURIComponent(JSON.stringify(payload)));
-    shareUrl = window.location.origin + window.location.pathname + '#r=' + encoded;
-  } catch (e) {
-    shareUrl = window.location.href;
-  }
-}
-
-function copyShareUrl() {
-  const btn = document.getElementById('copy-btn');
-  const text = `Мой тип: ${currentResult?.type?.toUpperCase()} · Предсказуемость: ${currentResult?.predictability}%\nИИ тебя раскусил: ${shareUrl}`;
-  navigator.clipboard?.writeText(text).then(() => {
-    btn.textContent = 'OK ✓';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 2000);
-  }).catch(() => { prompt('Скопируй:', text); });
-}
-
-function nativeShare() {
-  const text = `Мой тип: ${currentResult?.type?.toUpperCase()} · Предсказуемость: ${currentResult?.predictability}%\nИИ тебя раскусил: ${shareUrl}`;
-  if (navigator.share) {
-    navigator.share({ title: 'ИИ тебя раскусил', text, url: shareUrl }).catch(() => {});
-  } else {
-    copyShareUrl();
-  }
-}
-
-function checkHashResult() {
-  const hash = window.location.hash;
-  if (!hash.startsWith('#r=')) return false;
-  try {
-    const data = JSON.parse(decodeURIComponent(atob(hash.slice(3))));
-    if (!data.type) return false;
-    currentResult = data;
-    renderResult(data);
-    showScreen('result');
-    return true;
-  } catch (e) { return false; }
-}
-
-// =============================================
-// СРАВНЕНИЕ
-// =============================================
+/* ═══════════════════════════════════════════════
+   СРАВНЕНИЕ ДВУХ ПРОХОЖДЕНИЙ
+═══════════════════════════════════════════════ */
 let compareSelected = [];
 
 function renderCompareList() {
   compareSelected = [];
-  const h = getHistory();
+  const h    = getHistory();
   const wrap = document.getElementById('compare-list');
   if (!wrap) return;
   wrap.innerHTML = '';
@@ -1653,7 +1370,7 @@ function toggleCompareSelect(entry, el) {
   const existing = compareSelected.findIndex(e => e.id === entry.id);
   if (existing !== -1) {
     compareSelected.splice(existing, 1);
-    el.classList.remove('sel-a', 'sel-b');
+    el.classList.remove('sel-a','sel-b');
     document.getElementById('cdot-' + entry.id).style.background = 'rgba(83,144,15,0.3)';
   } else if (compareSelected.length < 2) {
     compareSelected.push(entry);
@@ -1667,7 +1384,7 @@ function toggleCompareSelect(entry, el) {
 function doCompare() {
   if (compareSelected.length < 2) return;
   const [a, b] = compareSelected;
-  const svgEl = document.getElementById('compare-svg');
+  const svgEl  = document.getElementById('compare-svg');
   svgEl.innerHTML = '';
 
   if (a.radar) renderRadarOverlay(a.radar, 'compare-svg', '#d6ce15', 'rgba(214,206,21,0.15)');
@@ -1675,158 +1392,209 @@ function doCompare() {
 
   document.getElementById('compare-legend').style.display = 'flex';
   document.getElementById('compare-radar-card').style.display = '';
-  document.getElementById('compare-radar-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  document.getElementById('compare-radar-card').scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
 
 function renderRadarOverlay(radarData, svgId, color, fillColor) {
-  const svg = document.getElementById(svgId);
+  const svg    = document.getElementById(svgId);
   const cx = 130, cy = 130, R = 90;
   const angles = RADAR_AXES.map((_, i) => (Math.PI * 2 * i / RADAR_AXES.length) - Math.PI / 2);
 
   function pt(r, a) { return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
   function svgEl(tag, attrs) {
     const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    Object.entries(attrs).forEach(([k,v]) => el.setAttribute(k, v));
     return el;
   }
 
+  // Добавляем сетку только если она ещё не нарисована
   if (!svg.querySelector('polygon')) {
-    [0.2, 0.4, 0.6, 0.8, 1.0].forEach(f => {
-      svg.appendChild(svgEl('polygon', {
-        points: angles.map(a => pt(R * f, a).join(',')).join(' '),
-        fill: 'none',
-        stroke: 'rgba(83,144,15,0.18)',
-        'stroke-width': '1'
-      }));
+    [0.2,0.4,0.6,0.8,1.0].forEach(f => {
+      svg.appendChild(svgEl('polygon', { points:angles.map(a=>pt(R*f,a).join(',')).join(' '), fill:'none', stroke:'rgba(83,144,15,0.18)', 'stroke-width':'1' }));
     });
     angles.forEach(a => {
-      const [x, y] = pt(R, a);
-      svg.appendChild(svgEl('line', {
-        x1: cx, y1: cy, x2: x, y2: y,
-        stroke: 'rgba(83,144,15,0.22)',
-        'stroke-width': '1'
-      }));
+      const [x,y]=pt(R,a);
+      svg.appendChild(svgEl('line',{x1:cx,y1:cy,x2:x,y2:y,stroke:'rgba(83,144,15,0.22)','stroke-width':'1'}));
     });
-    angles.forEach((a, i) => {
-      const [x, y] = pt(R + 22, a);
-      const text = svgEl('text', {
-        x, y,
-        'text-anchor': 'middle',
-        'dominant-baseline': 'middle',
-        fill: '#7a8a3a',
-        'font-size': '8.5',
-        'font-family': 'Courier New,monospace'
-      });
-      const label = RADAR_AXES[i].label;
-      if (label.length > 10) {
-        label.split(' ').forEach((w, wi) => {
-          const t = svgEl('tspan', { x, dy: wi === 0 ? '-5' : '11' });
-          t.textContent = w;
-          text.appendChild(t);
-        });
-      } else {
-        text.textContent = label;
-      }
+    // метки
+    angles.forEach((a,i)=>{
+      const [x,y]=pt(R+22,a);
+      const text=svgEl('text',{x,y,'text-anchor':'middle','dominant-baseline':'middle',fill:'#7a8a3a','font-size':'8.5','font-family':'Courier New,monospace'});
+      const label=RADAR_AXES[i].label;
+      if(label.length>10){label.split(' ').forEach((w,wi)=>{const t=svgEl('tspan',{x,dy:wi===0?'-5':'11'});t.textContent=w;text.appendChild(t);})}else{text.textContent=label;}
       svg.appendChild(text);
     });
   }
 
-  const values = RADAR_AXES.map(ax => Math.min(100, Math.max(0, parseFloat(radarData[ax.key] || 50))) / 100);
-  const dataPts = angles.map((a, i) => pt(R * values[i], a).join(',')).join(' ');
-  svg.appendChild(svgEl('polygon', {
-    points: dataPts,
-    fill: fillColor,
-    stroke: color,
-    'stroke-width': '2',
-    'stroke-dasharray': color === '#53900f' ? '5,3' : 'none'
-  }));
-  angles.forEach((a, i) => {
-    const [x, y] = pt(R * values[i], a);
-    svg.appendChild(svgEl('circle', {
-      cx: x, cy: y, r: '3.5',
-      fill: color,
-      stroke: '#1f2605',
-      'stroke-width': '1.5'
-    }));
+  const values  = RADAR_AXES.map(ax=>Math.min(100,Math.max(0,parseFloat(radarData[ax.key]||50)))/100);
+  const dataPts = angles.map((a,i)=>pt(R*values[i],a).join(',')).join(' ');
+  svg.appendChild(svgEl('polygon',{points:dataPts,fill:fillColor,stroke:color,'stroke-width':'2','stroke-dasharray': color==='#53900f'?'5,3':'none'}));
+  angles.forEach((a,i)=>{
+    const [x,y]=pt(R*values[i],a);
+    svg.appendChild(svgEl('circle',{cx:x,cy:y,r:'3.5',fill:color,stroke:'#1f2605','stroke-width':'1.5'}));
   });
 }
 
-// =============================================
-// ОЦЕНКА ТОЧНОСТИ
-// =============================================
+/* ═══════════════════════════════════════════════
+   СТАТИСТИКА
+═══════════════════════════════════════════════ */
+function renderStats(type) {
+  const nType = (type || '').toLowerCase().trim();
+  const row   = document.getElementById('stats-row');
+  row.innerHTML = '';
+
+  const history = getHistory();
+  const counts  = { 'npc':0,'второстепенный персонаж':0,'главный герой':0 };
+  history.forEach(e => { const k=(e.type||'').toLowerCase().trim(); if(counts[k]!==undefined) counts[k]++; });
+
+  const totals = {};
+  Object.keys(TYPE_STATS).forEach(k => { totals[k] = TYPE_STATS[k].base + (counts[k]||0); });
+  const sum = Object.values(totals).reduce((a,b)=>a+b,0);
+
+  Object.entries(TYPE_STATS).forEach(([key, info]) => {
+    const share = Math.round(totals[key]/sum*100);
+    const isYou = key === nType;
+    const item  = document.createElement('div');
+    item.className = 'stats-item';
+    item.innerHTML = `
+      <div class="stats-item-head">
+        <span>${info.label}${isYou?' ← ты':''}</span>
+        <span class="highlight-val">${share}%</span>
+      </div>
+      <div class="stats-bar-track"><div class="stats-bar-fill" data-val="${share}"></div></div>`;
+    row.appendChild(item);
+  });
+
+  setTimeout(()=>{ row.querySelectorAll('.stats-bar-fill').forEach(b=>{ b.style.width=b.dataset.val+'%'; }); }, 400);
+
+  const yourShare = Math.round((totals[nType]||0)/sum*100);
+  document.getElementById('stats-your-type').textContent   = (TYPE_STATS[nType]?.label||type).toUpperCase();
+  document.getElementById('stats-your-share').textContent  = 'Таких как ты — '+yourShare+'%';
+}
+
+/* ═══════════════════════════════════════════════
+   ОЦЕНКА ТОЧНОСТИ ДРУГОМ
+═══════════════════════════════════════════════ */
 function renderFriendRating(resultId) {
-  const wrap = document.getElementById('friend-rating-wrap');
+  const wrap     = document.getElementById('friend-rating-wrap');
   const resultEl = document.getElementById('rating-result');
-  const barsEl = document.getElementById('rating-bars');
+  const barsEl   = document.getElementById('rating-bars');
   wrap.innerHTML = '';
 
-  const ratings = getRatings();
+  const ratings  = getRatings();
   const myRating = ratings[resultId];
 
   const options = [
-    { val: 'exact', label: 'Точно в цель ✓', emoji: '💯' },
-    { val: 'mostly', label: 'В основном да', emoji: '👍' },
-    { val: 'partial', label: 'Частично', emoji: '🤔' },
-    { val: 'miss', label: 'Мимо', emoji: '❌' }
+    { val:'exact',   label:'Точно в цель ✓',   emoji:'💯' },
+    { val:'mostly',  label:'В основном да',     emoji:'👍' },
+    { val:'partial', label:'Частично',          emoji:'🤔' },
+    { val:'miss',    label:'Мимо',              emoji:'❌' }
   ];
 
   options.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'rating-btn' + (myRating === opt.val ? ' voted' : '');
     btn.innerHTML = `${opt.emoji}<br><span style="font-size:10px">${opt.label}</span>`;
-    btn.onclick = () => { saveRating(resultId, opt.val); renderFriendRating(resultId); };
+    btn.onclick   = () => { saveRating(resultId, opt.val); renderFriendRating(resultId); };
     wrap.appendChild(btn);
   });
 
-  const allVotes = Object.values(ratings);
-  const total = allVotes.length;
+  // Показываем статистику по всем результатам
+  const allVotes  = Object.values(ratings);
+  const total     = allVotes.length;
   if (total > 0) {
     resultEl.style.display = '';
-    barsEl.style.display = '';
-    resultEl.textContent = `Оценки ${total} прохождений:`;
+    barsEl.style.display   = '';
+    resultEl.textContent   = `Оценки ${total} прохождений:`;
     barsEl.innerHTML = '';
     options.forEach(opt => {
-      const count = allVotes.filter(v => v === opt.val).length;
-      const pct = Math.round(count / total * 100);
-      const row = document.createElement('div');
+      const count = allVotes.filter(v=>v===opt.val).length;
+      const pct   = Math.round(count/total*100);
+      const row   = document.createElement('div');
       row.className = 'rating-bar-row';
       row.innerHTML = `<span style="min-width:60px">${opt.emoji} ${pct}%</span>
         <div class="rating-bar-track"><div class="rating-bar-fill" data-val="${pct}"></div></div>
         <span>${count}</span>`;
       barsEl.appendChild(row);
     });
-    setTimeout(() => {
-      barsEl.querySelectorAll('.rating-bar-fill').forEach(b => {
-        b.style.width = b.dataset.val + '%';
-      });
-    }, 200);
+    setTimeout(()=>{ barsEl.querySelectorAll('.rating-bar-fill').forEach(b=>{ b.style.width=b.dataset.val+'%'; }); }, 200);
   } else {
     resultEl.style.display = 'none';
-    barsEl.style.display = 'none';
+    barsEl.style.display   = 'none';
   }
 }
 
 function getRatings() {
-  try { return JSON.parse(localStorage.getItem(LS_RATINGS) || '{}'); } catch (e) { return {}; }
+  try { return JSON.parse(localStorage.getItem(LS_RATINGS)||'{}'); } catch(e) { return {}; }
 }
 
 function saveRating(id, val) {
   const r = getRatings();
-  r[id] = val;
+  r[id]   = val;
   localStorage.setItem(LS_RATINGS, JSON.stringify(r));
 }
 
-// =============================================
-// AI ЧАТ
-// =============================================
+/* ═══════════════════════════════════════════════
+   ПОДЕЛИТЬСЯ (компактно)
+═══════════════════════════════════════════════ */
+let shareUrl = '';
+
+function buildShare(data) {
+  const summary = document.getElementById('share-summary');
+  if (summary) {
+    summary.textContent = `${data.type.toUpperCase()} · Предсказуемость ${data.predictability}%`;
+  }
+  // Формируем короткий хэш-url
+  try {
+    const payload = { type: data.type, predictability: data.predictability, analysis: data.analysis, conclusion: data.conclusion };
+    const encoded = btoa(encodeURIComponent(JSON.stringify(payload)));
+    shareUrl      = window.location.origin + window.location.pathname + '#r=' + encoded;
+  } catch(e) {
+    shareUrl = window.location.href;
+  }
+}
+
+function copyShareUrl() {
+  const btn  = document.getElementById('copy-btn');
+  const text = `Мой тип: ${currentResult?.type?.toUpperCase()} · Предсказуемость: ${currentResult?.predictability}%\nИИ тебя раскусил: ${shareUrl}`;
+  navigator.clipboard?.writeText(text).then(() => {
+    btn.textContent = 'OK ✓'; btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent='COPY'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => { prompt('Скопируй:', text); });
+}
+
+function nativeShare() {
+  const text = `Мой тип: ${currentResult?.type?.toUpperCase()} · Предсказуемость: ${currentResult?.predictability}%\nИИ тебя раскусил: ${shareUrl}`;
+  if (navigator.share) {
+    navigator.share({ title:'ИИ тебя раскусил', text, url: shareUrl }).catch(()=>{});
+  } else {
+    copyShareUrl();
+  }
+}
+
+function checkHashResult() {
+  const hash = window.location.hash;
+  if (!hash.startsWith('#r=')) return false;
+  try {
+    const data = JSON.parse(decodeURIComponent(atob(hash.slice(3))));
+    if (!data.type) return false;
+    currentResult = data;
+    renderResult(data);
+    showScreen('result');
+    return true;
+  } catch(e) { return false; }
+}
+
+/* ═══════════════════════════════════════════════
+   AI ЧАТ
+═══════════════════════════════════════════════ */
 function loadChatSession() {
   try {
     const saved = JSON.parse(localStorage.getItem(LS_CHAT) || '{}');
-    chatHistory = saved.history || [];
-    chatUsed = saved.used || 0;
-  } catch (e) {
-    chatHistory = [];
-    chatUsed = 0;
+    chatHistory  = saved.history || [];
+    chatUsed     = saved.used    || 0;
+  } catch(e) {
+    chatHistory = []; chatUsed = 0;
   }
 }
 
@@ -1839,6 +1607,7 @@ function restoreChatUI() {
   container.innerHTML = '';
 
   if (chatHistory.length === 0) {
+    // Приветственное сообщение от ИИ
     appendChatMsg('ai', 'Система активирована. Я проанализировал тебя. Задай вопрос — отвечу честно, без лишних слов.');
   } else {
     chatHistory.forEach(msg => {
@@ -1884,7 +1653,7 @@ function chatKeydown(e) {
 async function sendChatMessage() {
   if (chatUsed >= CHAT_LIMIT) return;
   const input = document.getElementById('chat-input');
-  const text = input.value.trim();
+  const text  = input.value.trim();
   if (!text) return;
 
   input.value = '';
@@ -1893,7 +1662,8 @@ async function sendChatMessage() {
 
   appendChatMsg('user', text);
 
-  const container = document.getElementById('chat-messages');
+  // Typing indicator
+  const container  = document.getElementById('chat-messages');
   const typingBubble = document.createElement('div');
   typingBubble.className = 'chat-msg';
   const typingLabel = document.createElement('div');
@@ -1907,16 +1677,17 @@ async function sendChatMessage() {
   container.appendChild(typingBubble);
   container.scrollTop = container.scrollHeight;
 
+  // Строим контекст
   const r = currentResult;
   const systemContext = `Ты — холодная аналитическая система. Ты уже проанализировал этого пользователя.
 Результат:
 - Тип: ${r?.type || '?'}
 - Предсказуемость: ${r?.predictability || '?'}%
-- Анализ: ${(r?.analysis || []).join('; ')}
+- Анализ: ${(r?.analysis||[]).join('; ')}
 - Заключение: ${r?.conclusion || '?'}
-- Путь ответов: ${(r?.path || []).join(' → ')}
 Отвечай кратко, уверенно, слегка жёстко. Без воды. Без markdown и звёздочек.`;
 
+  // Добавляем новое сообщение в историю
   chatHistory.push({ role: 'user', content: text });
 
   const messages = [
@@ -1931,7 +1702,7 @@ async function sendChatMessage() {
     appendChatMsg('ai', clean);
     chatHistory.push({ role: 'assistant', content: clean });
     saveChatSession();
-  } catch (e) {
+  } catch(e) {
     typingBubble.remove();
     appendChatMsg('ai', 'Ошибка соединения. Оба API недоступны. Попробуй позже.');
     chatUsed = Math.max(0, chatUsed - 1);
@@ -1939,21 +1710,17 @@ async function sendChatMessage() {
   }
 }
 
-// =============================================
-// ТАБЫ
-// =============================================
+/* ═══════════════════════════════════════════════
+   ТАБЫ
+═══════════════════════════════════════════════ */
 function switchTab(name, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   if (btn) btn.classList.add('active');
   const panel = document.getElementById('tab-' + name);
   if (panel) panel.classList.add('active');
   if (name === 'stats') {
-    setTimeout(() => {
-      document.querySelectorAll('.stats-bar-fill').forEach(b => {
-        b.style.width = b.dataset.val + '%';
-      });
-    }, 100);
+    setTimeout(()=>{ document.querySelectorAll('.stats-bar-fill').forEach(b=>{ b.style.width=b.dataset.val+'%'; }); }, 100);
   }
   if (name === 'compare') renderCompareList();
 }
@@ -1963,9 +1730,9 @@ function switchTabById(name) {
   switchTab(name, btn);
 }
 
-// =============================================
-// ИНИЦИАЛИЗАЦИЯ
-// =============================================
+/* ═══════════════════════════════════════════════
+   ИНИЦИАЛИЗАЦИЯ
+═══════════════════════════════════════════════ */
 (function init() {
   if (!checkHashResult()) {
     initStartHistory();

@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ИИ тебя раскусил</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #1f2605;
+      --primary:   #1f6521;
+      --accent:    #53900f;
+      --secondary: #a4a71e;
+      --highlight: #d6ce15;
+      --text:      #e8ebb0;
+      --muted:     #7a8a3a;
+      --card-bg:   rgba(31,101,33,0.12);
+      --card-brd:  rgba(83,144,15,0.35);
+      --err:       #f08080;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 16px 70px;
+      transition: background .3s, color .3s;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* HEADER */
+    .site-header {
+      text-align: center;
+      margin-bottom: 26px;
+      animation: fadeIn .6s ease both;
+    }
+    .site-header .tag {
+      display: inline-block;
+      font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 3px 10px; border-radius: 2px;
+      margin-bottom: 12px;
+    }
+    .site-header h1 {
+      font-size: clamp(22px, 6vw, 30px);
+      font-weight: 700; color: var(--highlight);
+      letter-spacing: 1px; line-height: 1.2;
+    }
+    .site-header .subtitle {
+      font-size: 12px; color: var(--muted); margin-top: 7px;
+    }
+
+    /* SCREENS */
+    .screen {
+      display: none; flex-direction: column;
+      gap: 16px; animation: fadeIn .45s ease both;
+    }
+    .screen.active { display: flex; }
+
+    /* CARD */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-brd);
+      border-radius: 14px; padding: 20px 18px;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    /* PROGRESS */
+    .progress-bar-wrap { display: flex; align-items: center; gap: 10px; }
+    .progress-bar-track {
+      flex: 1; height: 4px;
+      background: rgba(83,144,15,0.2);
+      border-radius: 99px; overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%; background: var(--highlight);
+      border-radius: 99px;
+      transition: width .4s cubic-bezier(.4,0,.2,1);
+    }
+    .progress-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .progress-time  { font-size: 10px; color: rgba(122,138,58,0.5); white-space: nowrap; }
+
+    /* TIMER MODE */
+    .timer-wrap {
+      display: none; align-items: center; gap: 8px;
+      padding: 6px 12px;
+      background: rgba(214,206,21,0.07);
+      border: 1px solid rgba(214,206,21,0.25);
+      border-radius: 8px;
+    }
+    .timer-wrap.visible { display: flex; }
+    .timer-label { font-size: 11px; color: var(--muted); }
+    .timer-track {
+      flex: 1; height: 4px;
+      background: rgba(214,206,21,0.15);
+      border-radius: 99px; overflow: hidden;
+    }
+    .timer-fill {
+      height: 100%; width: 100%;
+      background: var(--highlight);
+      border-radius: 99px;
+      transition: width 1s linear, background .3s;
+    }
+    .timer-val {
+      font-size: 13px; font-weight: 700;
+      color: var(--highlight); min-width: 22px; text-align: right;
+    }
+
+    /* QUESTION */
+    .question-num {
+      font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    .question-text {
+      font-size: clamp(15px, 4.2vw, 19px);
+      font-weight: 700; color: var(--text);
+      line-height: 1.45; margin-bottom: 20px;
+    }
+
+    /* OPTIONS */
+    .options { display: flex; flex-direction: column; gap: 9px; }
+    .option-btn {
+      background: rgba(83,144,15,0.1);
+      border: 1px solid rgba(83,144,15,0.4);
+      border-radius: 10px; color: var(--text);
+      font-family: inherit; font-size: 14px;
+      padding: 13px 16px; cursor: pointer;
+      text-align: left;
+      transition: background .2s, border-color .2s, transform .15s;
+      line-height: 1.35;
+    }
+    .option-btn:hover  { background: rgba(83,144,15,0.28); border-color: var(--secondary); transform: translateX(4px); }
+    .option-btn:active { background: rgba(164,167,30,0.25); border-color: var(--highlight); transform: translateX(2px) scale(0.98); }
+    .option-btn.selected { background: rgba(214,206,21,0.18); border-color: var(--highlight); color: var(--highlight); }
+
+    /* SLIDER */
+    .slider-wrap {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-top: 10px;
+    }
+    .slider {
+      width: 100%; height: 6px;
+      background: rgba(83,144,15,0.2);
+      border-radius: 99px; outline: none;
+      -webkit-appearance: none;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px; height: 20px;
+      background: var(--highlight);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(214,206,21,0.6);
+    }
+    .slider::-moz-range-thumb {
+      width: 20px; height: 20px;
+      background: var(--highlight);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+    .slider-labels {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: var(--muted);
+    }
+    .slider-value {
+      font-size: 14px; font-weight: 700;
+      color: var(--highlight); text-align: center;
+      margin-top: 4px;
+    }
+
+    /* ANALYZING */
+    .analyzing-wrap {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 24px;
+      padding: 34px 20px; text-align: center;
+    }
+    .spinner {
+      width: 52px; height: 52px;
+      border: 3px solid rgba(83,144,15,0.2);
+      border-top-color: var(--highlight);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    .analyzing-steps { display: flex; flex-direction: column; gap: 8px; min-height: 100px; }
+    .analyzing-step { font-size: 13px; color: var(--muted); opacity: 0; transition: opacity .4s ease; }
+    .analyzing-step.visible { opacity: 1; color: var(--secondary); }
+    .analyzing-step.done    { color: var(--accent); }
+    .api-note { font-size: 10px; color: rgba(122,138,58,0.5); margin-top: 6px; }
+
+    /* RESULT */
+    .result-type-label {
+      font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
+    }
+    .result-type {
+      font-size: clamp(24px,7.5vw,36px);
+      font-weight: 700; color: var(--highlight);
+      letter-spacing: 1px; line-height: 1.1;
+    }
+    .result-predict {
+      margin-top: 14px; display: flex; align-items: center; gap: 10px;
+    }
+    .result-predict-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .result-predict-bar-track {
+      flex: 1; height: 6px;
+      background: rgba(83,144,15,0.2);
+      border-radius: 99px; overflow: hidden;
+    }
+    .result-predict-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--highlight));
+      border-radius: 99px;
+      transition: width 1.2s cubic-bezier(.4,0,.2,1); width: 0%;
+    }
+    .result-predict-val {
+      font-size: 15px; font-weight: 700;
+      color: var(--highlight); white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .result-analysis { display: flex; flex-direction: column; gap: 10px; }
+    .result-analysis-item {
+      font-size: 14px; color: var(--text);
+      line-height: 1.5; padding-left: 14px;
+      border-left: 2px solid var(--accent);
+      opacity: 0; transform: translateX(-8px);
+      transition: opacity .4s ease, transform .4s ease;
+    }
+    .result-analysis-item.shown { opacity: 1; transform: translateX(0); }
+
+    .result-conclusion {
+      font-size: 14px; color: var(--text);
+      line-height: 1.65; font-style: italic; min-height: 40px;
+    }
+
+    /* TYPEWRITER */
+    .typewriter-cursor {
+      display: inline-block; width: 2px; height: 14px;
+      background: var(--highlight); margin-left: 2px;
+      vertical-align: middle;
+      animation: blink .75s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* RADAR */
+    .radar-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .radar-wrap svg { overflow: visible; }
+    .radar-legend { display: flex; flex-wrap: wrap; gap: 5px 12px; justify-content: center; margin-top: 4px; }
+    .radar-legend-item { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+    .radar-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    /* STATS */
+    .stats-row { display: flex; flex-direction: column; gap: 8px; }
+    .stats-item { display: flex; flex-direction: column; gap: 4px; }
+    .stats-item-head { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+    .stats-item-head .highlight-val { color: var(--highlight); font-weight: 700; }
+    .stats-bar-track { height: 5px; background: rgba(83,144,15,0.2); border-radius: 99px; overflow: hidden; }
+    .stats-bar-fill {
+      height: 100%; border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent), var(--highlight));
+      width: 0%; transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+    .your-type-row {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--muted);
+      border-top: 1px solid rgba(83,144,15,0.2);
+      padding-top: 10px; margin-top: 4px; flex-wrap: wrap;
+    }
+    .your-type-row .badge {
+      background: rgba(214,206,21,0.15); border: 1px solid var(--highlight);
+      color: var(--highlight); font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px; letter-spacing: 1px;
+    }
+
+    /* HISTORY */
+    .history-list { display: flex; flex-direction: column; gap: 9px; }
+    .history-item {
+      background: rgba(83,144,15,0.08);
+      border: 1px solid rgba(83,144,15,0.25);
+      border-radius: 10px; padding: 11px 13px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px; cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .history-item:hover { background: rgba(83,144,15,0.18); border-color: var(--secondary); }
+    .history-item.active-entry { border-color: var(--highlight); background: rgba(214,206,21,0.08); }
+    .history-item-left { display: flex; flex-direction: column; gap: 3px; }
+    .history-item-type { font-size: 13px; font-weight: 700; color: var(--text); }
+    .history-item-date { font-size: 10px; color: var(--muted); }
+    .history-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+    .history-item-pct  { font-size: 14px; font-weight: 700; color: var(--highlight); }
+    .history-item-label{ font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+    .history-empty { font-size: 13px; color: var(--muted); text-align: center; padding: 10px 0; }
+
+    /* COMPARE */
+    .compare-select-wrap { display: flex; flex-direction: column; gap: 8px; }
+    .compare-select-item {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(83,144,15,0.08);
+      border: 1px solid rgba(83,144,15,0.25);
+      border-radius: 10px; padding: 10px 13px; cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .compare-select-item:hover { border-color: var(--secondary); background: rgba(83,144,15,0.18); }
+    .compare-select-item.sel-a { border-color: var(--highlight); background: rgba(214,206,21,0.1); }
+    .compare-select-item.sel-b { border-color: var(--accent); background: rgba(83,144,15,0.2); }
+    .compare-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .compare-info { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+    .compare-type { font-size: 13px; font-weight: 700; color: var(--text); }
+    .compare-date { font-size: 10px; color: var(--muted); }
+    .compare-pct  { font-size: 13px; font-weight: 700; color: var(--highlight); }
+    .compare-legend { display: flex; gap: 16px; font-size: 11px; color: var(--muted); }
+    .compare-legend-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+
+    /* SHARE */
+    .share-compact {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(83,144,15,0.1);
+      border: 1px solid rgba(83,144,15,0.35);
+      border-radius: 8px; padding: 10px 14px;
+    }
+    .share-compact-text { flex: 1; font-size: 13px; color: var(--text); }
+    .share-compact-sub  { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .copy-btn {
+      flex-shrink: 0; background: var(--accent); color: #fff;
+      border: none; border-radius: 6px; font-family: inherit;
+      font-size: 10px; font-weight: 700; padding: 6px 12px;
+      cursor: pointer; letter-spacing: 1px; transition: background .2s;
+    }
+    .copy-btn:hover { background: var(--secondary); }
+    .copy-btn.copied { background: var(--primary); color: var(--highlight); }
+
+    /* TIMING */
+    .timing-row { display: flex; gap: 7px; flex-wrap: wrap; }
+    .timing-chip {
+      font-size: 10px; background: rgba(83,144,15,0.12);
+      border: 1px solid rgba(83,144,15,0.25);
+      border-radius: 6px; padding: 4px 8px; color: var(--muted);
+    }
+    .timing-chip span { color: var(--secondary); }
+
+    /* FRIEND RATING */
+    .friend-rating-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
+    .rating-btn {
+      flex: 1; min-width: 80px;
+      background: rgba(83,144,15,0.1);
+      border: 1px solid rgba(83,144,15,0.35);
+      border-radius: 8px; color: var(--text);
+      font-family: inherit; font-size: 12px;
+      padding: 10px 8px; cursor: pointer;
+      text-align: center; transition: all .2s;
+    }
+    .rating-btn:hover { background: rgba(83,144,15,0.25); border-color: var(--secondary); }
+    .rating-btn.voted { border-color: var(--highlight); color: var(--highlight); background: rgba(214,206,21,0.12); }
+    .rating-result { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+    .rating-bars { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
+    .rating-bar-row { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--muted); }
+    .rating-bar-track { flex: 1; height: 4px; background: rgba(83,144,15,0.2); border-radius: 99px; overflow: hidden; }
+    .rating-bar-fill  { height: 100%; border-radius: 99px; background: var(--accent); transition: width .8s ease; width: 0%; }
+
+    /* AI CHAT */
+    .chat-messages {
+      display: flex; flex-direction: column; gap: 10px;
+      max-height: 320px; overflow-y: auto;
+      padding-right: 4px;
+    }
+    .chat-msg {
+      display: flex; flex-direction: column; gap: 3px;
+      animation: fadeIn .3s ease both;
+    }
+    .chat-msg-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+    .chat-msg-label.user-label { color: var(--secondary); text-align: right; }
+    .chat-msg-label.ai-label   { color: var(--accent); }
+    .chat-msg-bubble {
+      font-size: 13px; line-height: 1.55;
+      padding: 10px 13px; border-radius: 10px;
+      max-width: 92%;
+    }
+    .chat-msg-bubble.user {
+      background: rgba(164,167,30,0.12);
+      border: 1px solid rgba(164,167,30,0.3);
+      align-self: flex-end; color: var(--text);
+    }
+    .chat-msg-bubble.ai {
+      background: rgba(83,144,15,0.12);
+      border: 1px solid rgba(83,144,15,0.3);
+      align-self: flex-start; color: var(--text);
+    }
+    .chat-msg-bubble.ai.typing { color: var(--muted); font-style: italic; }
+    .chat-input-wrap { display: flex; gap: 8px; margin-top: 10px; }
+    .chat-input {
+      flex: 1; background: rgba(83,144,15,0.1);
+      border: 1px solid rgba(83,144,15,0.4);
+      border-radius: 8px; color: var(--text);
+      font-family: inherit; font-size: 13px;
+      padding: 10px 13px; outline: none;
+      transition: border-color .2s;
+      resize: none; min-height: 42px; max-height: 100px;
+    }
+    .chat-input:focus { border-color: var(--secondary); }
+    .chat-send {
+      flex-shrink: 0; background: var(--accent); color: #fff;
+      border: none; border-radius: 8px; font-family: inherit;
+      font-size: 20px; padding: 0 14px; cursor: pointer;
+      transition: background .2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .chat-send:hover    { background: var(--secondary); }
+    .chat-send:disabled { background: rgba(83,144,15,0.3); cursor: not-allowed; }
+    .chat-limit { font-size: 10px; color: var(--muted); text-align: right; margin-top: 4px; }
+
+    /* BUTTONS */
+    .btn {
+      display: block; width: 100%;
+      padding: 14px 20px; border-radius: 10px;
+      font-family: inherit; font-size: 14px;
+      font-weight: 700; letter-spacing: 1px;
+      cursor: pointer; text-align: center; border: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--secondary); box-shadow: 0 4px 20px rgba(83,144,15,0.4); }
+    .btn-outline { background: transparent; color: var(--secondary); border: 1px solid var(--secondary); }
+    .btn-outline:hover { background: rgba(164,167,30,0.1); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid rgba(83,144,15,0.25); font-size: 12px; padding: 10px; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+    .btn-sm { padding: 8px 14px; font-size: 12px; }
+    .btn-row { display: flex; gap: 8px; }
+    .btn-row .btn { flex: 1; }
+
+    /* TIMER MODE TOGGLE */
+    .mode-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .mode-label { font-size: 12px; color: var(--muted); }
+    .toggle-wrap { display: flex; align-items: center; gap: 8px; }
+    .toggle { position: relative; width: 38px; height: 20px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      background: rgba(83,144,15,0.25);
+      border: 1px solid rgba(83,144,15,0.4);
+      border-radius: 20px; cursor: pointer;
+      transition: background .2s;
+    }
+    .toggle-slider:before {
+      content: ''; position: absolute;
+      width: 14px; height: 14px;
+      left: 2px; top: 2px;
+      background: var(--muted); border-radius: 50%;
+      transition: transform .2s, background .2s;
+    }
+    .toggle input:checked + .toggle-slider { background: rgba(83,144,15,0.5); }
+    .toggle input:checked + .toggle-slider:before { transform: translateX(18px); background: var(--highlight); }
+    .toggle-label { font-size: 11px; color: var(--muted); }
+
+    /* TABS */
+    .tabs { display: flex; gap: 6px; }
+    .tab-btn {
+      flex: 1; padding: 9px 4px;
+      background: rgba(83,144,15,0.08);
+      border: 1px solid rgba(83,144,15,0.25);
+      border-radius: 8px; color: var(--muted);
+      font-family: inherit; font-size: 10px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s;
+    }
+    .tab-btn.active { background: rgba(214,206,21,0.12); border-color: var(--highlight); color: var(--highlight); }
+    .tab-btn:hover:not(.active) { border-color: var(--accent); color: var(--text); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn .3s ease both; }
+
+    /* START */
+    .start-list { display: flex; flex-direction: column; gap: 8px; }
+    .start-list-item { font-size: 13px; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; }
+    .start-list-item span.dot { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+    .start-note { font-size: 11px; color: rgba(122,138,58,0.6); text-align: center; margin-top: -4px; }
+
+    /* ERROR */
+    .error-box {
+      background: rgba(180,30,30,0.12);
+      border: 1px solid rgba(200,50,50,0.4);
+      border-radius: 10px; padding: 16px;
+      font-size: 13px; color: var(--err); line-height: 1.5;
+    }
+    .api-status {
+      font-size: 10px; color: var(--muted);
+      margin-top: 8px; padding-top: 8px;
+      border-top: 1px solid rgba(83,144,15,0.2);
+    }
+    .api-status span { color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes spin   { to { transform: rotate(360deg); } }
+    @keyframes pulseGlow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(214,206,21,0); }
+      50%      { box-shadow: 0 0 18px 4px rgba(214,206,21,0.15); }
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+    /* FOOTER */
+    .site-footer {
+      text-align: center; margin-top: 28px;
+      font-size: 10px; color: rgba(122,138,58,0.3); letter-spacing: 1px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px; background: rgba(83,144,15,0.2);
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="tag">AI · Профилирование v4.0</div>
+    <h1>ИИ тебя раскусил</h1>
+    <p class="subtitle">Глубокий анализ твоих паттернов поведения</p>
+  </header>
+
+  <!-- START SCREEN -->
+  <div id="screen-start" class="screen active">
+    <div class="card">
+      <div class="section-title">Что произойдёт</div>
+      <div class="start-list">
+        <div class="start-list-item"><span class="dot">▸</span><span>4 адаптивных вопроса — ветвление на основе ответов</span></div>
+        <div class="start-list-item"><span class="dot">▸</span><span>Дилеммы, ситуации, шкалы и проективные вопросы</span></div>
+        <div class="start-list-item"><span class="dot">▸</span><span>ИИ анализирует ответы и скорость реакций</span></div>
+        <div class="start-list-item"><span class="dot">▸</span><span>Тип личности, предсказуемость, жёсткий разбор</span></div>
+        <div class="start-list-item"><span class="dot">▸</span><span>После — можно задать ИИ любой вопрос о себе</span></div>
+      </div>
+      <div class="divider" style="margin:14px 0 12px"></div>
+      <div class="mode-row">
+        <span class="mode-label">Режим таймера <span style="color:var(--accent)">⏱</span></span>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="timer-toggle" onchange="toggleTimerMode()">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" id="timer-toggle-label">выкл</span>
+        </div>
+      </div>
+      <div id="timer-mode-hint" style="display:none; font-size:11px; color:var(--muted); margin-top:8px;">
+        ⚡ На каждый ответ — 15 секунд. Не успел — выбор случайный.
+      </div>
+    </div>
+
+    <div class="card" id="history-card" style="display:none">
+      <div class="section-title">История прохождений</div>
+      <div class="history-list" id="history-list"></div>
+    </div>
+
+    <button class="btn btn-primary" onclick="startTest()">НАЧАТЬ АНАЛИЗ</button>
+    <p class="start-note">Результат сохраняется локально</p>
+  </div>
+
+  <!-- QUESTION SCREEN -->
+  <div id="screen-question" class="screen">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label" id="progress-label">1 / 4</div>
+      <div class="progress-time" id="progress-time"></div>
+    </div>
+    <div class="timer-wrap" id="timer-wrap">
+      <span class="timer-label">⏱</span>
+      <div class="timer-track">
+        <div class="timer-fill" id="timer-fill"></div>
+      </div>
+      <span class="timer-val" id="timer-val">15</span>
+    </div>
+    <div class="card">
+      <div class="question-num" id="q-num">Вопрос 1</div>
+      <div class="question-text" id="q-text"></div>
+      <div id="q-options-container"></div>
+    </div>
+  </div>
+
+  <!-- ANALYZING SCREEN -->
+  <div id="screen-analyzing" class="screen">
+    <div class="card">
+      <div class="analyzing-wrap">
+        <div class="spinner"></div>
+        <div class="analyzing-steps">
+          <div class="analyzing-step" id="step-1">▸ анализирую ответы...</div>
+          <div class="analyzing-step" id="step-2">▸ выявляю паттерны...</div>
+          <div class="analyzing-step" id="step-3">▸ сравниваю с профилями...</div>
+          <div class="analyzing-step" id="step-4">▸ замеряю скорость реакций...</div>
+          <div class="analyzing-step" id="step-5">▸ формирую заключение...</div>
+        </div>
+        <div class="api-note" id="api-note"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="screen-result" class="screen">
+    <!-- Type + Predictability -->
+    <div class="card" style="animation: pulseGlow 3s ease infinite;">
+      <div class="result-type-label">Твой тип</div>
+      <div class="result-type" id="r-type">—</div>
+      <div class="result-predict">
+        <div class="result-predict-label">Предсказуемость</div>
+        <div class="result-predict-bar-track">
+          <div class="result-predict-bar-fill" id="r-bar"></div>
+        </div>
+        <div class="result-predict-val" id="r-percent">—</div>
+      </div>
+    </div>
+
+    <!-- Timing -->
+    <div class="card" id="timing-card" style="display:none">
+      <div class="section-title">Скорость реакций</div>
+      <div class="timing-row" id="timing-chips"></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('analysis',this)">АНАЛИЗ</button>
+      <button class="tab-btn" onclick="switchTab('radar',this)">ПРОФИЛЬ</button>
+      <button class="tab-btn" onclick="switchTab('stats',this)">СРАВНЕНИЕ</button>
+      <button class="tab-btn" onclick="switchTab('compare',this)">ИСТОРИЯ</button>
+    </div>
+
+    <!-- TAB: Analysis -->
+    <div class="tab-panel active" id="tab-analysis">
+      <div class="card">
+        <div class="section-title">Анализ паттернов</div>
+        <div class="result-analysis" id="r-analysis"></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="section-title">Заключение</div>
+        <div class="result-conclusion" id="r-conclusion"></div>
+      </div>
+    </div>
+
+    <!-- TAB: Radar -->
+    <div class="tab-panel" id="tab-radar">
+      <div class="card">
+        <div class="section-title">Психологический профиль</div>
+        <div class="radar-wrap">
+          <svg id="radar-svg" width="260" height="260" viewBox="0 0 260 260"></svg>
+          <div class="radar-legend" id="radar-legend"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Stats -->
+    <div class="tab-panel" id="tab-stats">
+      <div class="card">
+        <div class="section-title">Таких как ты среди прошедших</div>
+        <div class="stats-row" id="stats-row"></div>
+        <div class="your-type-row">
+          <span>Твой тип:</span>
+          <span class="badge" id="stats-your-type">—</span>
+          <span id="stats-your-share" style="margin-left:auto;color:var(--highlight);font-weight:700;font-size:13px;">—</span>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="section-title">Насколько точно тебя описали?</div>
+        <div class="friend-rating-wrap" id="friend-rating-wrap"></div>
+        <div class="rating-result" id="rating-result" style="display:none"></div>
+        <div class="rating-bars" id="rating-bars" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- TAB: Compare -->
+    <div class="tab-panel" id="tab-compare">
+      <div class="card">
+        <div class="section-title">Сравнить два прохождения</div>
+        <div id="compare-instructions" style="font-size:12px;color:var(--muted);margin-bottom:10px;">
+          Выбери два результата для сравнения на радаре
+        </div>
+        <div class="compare-select-wrap" id="compare-list"></div>
+        <div id="compare-legend" class="compare-legend" style="display:none;margin:10px 0 0;">
+          <span><span class="compare-legend-dot" style="background:#d6ce15"></span>Прохождение A</span>
+          <span><span class="compare-legend-dot" style="background:#53900f"></span>Прохождение B</span>
+        </div>
+        <button class="btn btn-outline btn-sm" id="compare-btn" onclick="doCompare()" style="margin-top:12px;display:none;">СРАВНИТЬ НА РАДАРЕ</button>
+      </div>
+      <div class="card" id="compare-radar-card" style="display:none;margin-top:16px">
+        <div class="section-title">Сравнение профилей</div>
+        <div class="radar-wrap">
+          <svg id="compare-svg" width="260" height="260" viewBox="0 0 260 260"></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share -->
+    <div class="card">
+      <div class="section-title">Поделиться</div>
+      <div class="share-compact">
+        <div style="flex:1">
+          <div class="share-compact-text" id="share-summary">—</div>
+          <div class="share-compact-sub">Нажми COPY или отправь другу ↓</div>
+        </div>
+        <button class="copy-btn" id="copy-btn" onclick="copyShareUrl()">COPY</button>
+      </div>
+      <button class="btn btn-outline" onclick="nativeShare()" style="margin-top:10px;">ОТПРАВИТЬ ДРУГУ</button>
+    </div>
+
+    <!-- AI Chat -->
+    <div class="card">
+      <div class="section-title">Спроси систему о себе</div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-wrap">
+        <textarea class="chat-input" id="chat-input" placeholder="Задай вопрос ИИ о своём результате..." rows="1" onkeydown="chatKeydown(event)"></textarea>
+        <button class="chat-send" id="chat-send" onclick="sendChatMessage()">➤</button>
+      </div>
+      <div class="chat-limit" id="chat-limit">Осталось вопросов: <span id="chat-remaining">5</span></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="showFullHistory()">ИСТОРИЯ</button>
+      <button class="btn btn-primary" onclick="resetTest()">ЗАНОВО</button>
+    </div>
+  </div>
+
+  <!-- FULL HISTORY SCREEN -->
+  <div id="screen-history" class="screen">
+    <div class="card">
+      <div class="section-title">История прохождений</div>
+      <div class="history-list" id="full-history-list"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="showScreen('result')">← НАЗАД</button>
+      <button class="btn btn-outline" onclick="clearHistory()">ОЧИСТИТЬ</button>
+    </div>
+  </div>
+
+  <!-- ERROR SCREEN -->
+  <div id="screen-error" class="screen">
+    <div class="error-box" id="error-msg"></div>
+    <div class="api-status" id="api-status-info"></div>
+    <button class="btn btn-outline" onclick="resetTest()">ПОПРОБОВАТЬ СНОВА</button>
+  </div>
+
+  <footer class="site-footer">SYSTEM · AI PROFILING v4.0</footer>
+</div>
+
+<script>
+// =============================================
+// КОНФИГУРАЦИЯ
+// =============================================
+const API_KEYS = [
+  "G9CuVLq1Sfw7BZr4kSBuCReNrHvQNsno",
+  "9GD4i61YFOjDaMCpcs9XF2clvlYRf7EZ"
+];
+const API_URL = "https://api.mistral.ai/v1/chat/completions";
+const API_MODEL = "mistral-small-latest";
+
+const LS_RESULT = "user_result_v4";
+const LS_HISTORY = "user_history_v4";
+const LS_RATINGS = "friend_ratings_v4";
+const LS_CHAT = "chat_messages_v4";
+
+const CHAT_LIMIT = 5;
+
+// Ветвление вопросов (4 вопроса с 2 вариантами ветвления)
+const QUESTION_TREE = {
+  start: {
+    question: "Ты на перекрёстке: друг просит подвезти его срочно, но ты уже опоздываешь на важную встречу. Что делаешь?",
+    options: [
+      { text: "Подвезу друга — встречу можно перенести", next: "q1a" },
+      { text: "Еду на встречу — друг поймёт", next: "q1b" }
+    ],
+    type: "dilemma"
+  },
+  q1a: {
+    question: "Ты в 3 часа ночи один дома. Что делаешь?",
+    options: [
+      { text: "Сплю — зачем нарушать режим?", next: "q2a" },
+      { text: "Читаю/работаю/смотрю фильм — ночью лучше думается", next: "q2b" }
+    ],
+    type: "projective"
+  },
+  q1b: {
+    question: "Тебе написали в 23:00 с просьбой помочь с срочной работой. Как реагируешь?",
+    options: [
+      { text: "Отвечаю: 'Сейчас не могу, но завтра помогу'", next: "q2c" },
+      { text: "Берусь сразу — если срочно, значит важно", next: "q2d" }
+    ],
+    type: "situational"
+  },
+  q2a: {
+    question: "Насколько ты управляешь своей жизнью? (1 — хаос, 10 — полный контроль)",
+    type: "scale",
+    min: 1,
+    max: 10,
+    next: "q3a"
+  },
+  q2b: {
+    question: "Что бы ты сделал, если бы тебя никто не видел?",
+    options: [
+      { text: "То же, что и всегда — мне нечего скрывать", next: "q3b" },
+      { text: "Что-то запретное — ради адреналина", next: "q3c" }
+    ],
+    type: "projective"
+  },
+  q2c: {
+    question: "Насколько ты зависим от мнения других? (1 — совсем не зависим, 10 — очень зависим)",
+    type: "scale",
+    min: 1,
+    max: 10,
+    next: "q3d"
+  },
+  q2d: {
+    question: "Ты нашел кошелёк с деньгами и документами. Что делаешь?",
+    options: [
+      { text: "Возвращаю владельцу — это правильно", next: "q3e" },
+      { text: "Забираю деньги, документы выкидываю", next: "q3f" }
+    ],
+    type: "dilemma"
+  },
+  q3a: {
+    question: "Ты в компании друзей. Все смеются над шуткой, которая тебе не кажется смешной. Что делаешь?",
+    options: [
+      { text: "Смеюсь вместе с ними — не хочется выделяться", next: "end" },
+      { text: "Молчу или говорю, что не смешно", next: "end" }
+    ],
+    type: "situational"
+  },
+  q3b: {
+    question: "Насколько ты честен с собой? (1 — часто обманываю себя, 10 — всегда честен)",
+    type: "scale",
+    min: 1,
+    max: 10,
+    next: "end"
+  },
+  q3c: {
+    question: "Ты нашел кошелёк с деньгами и документами. Что делаешь?",
+    options: [
+      { text: "Возвращаю владельцу — это правильно", next: "end" },
+      { text: "Забираю деньги, документы выкидываю", next: "end" }
+    ],
+    type: "dilemma"
+  },
+  q3d: {
+    question: "Ты в 3 часа ночи один дома. Что делаешь?",
+    options: [
+      { text: "Сплю — зачем нарушать режим?", next: "end" },
+      { text: "Читаю/работаю/смотрю фильм — ночью лучше думается", next: "end" }
+    ],
+    type: "projective"
+  },
+  q3e: {
+    question: "Насколько ты управляешь своей жизнью? (1 — хаос, 10 — полный контроль)",
+    type: "scale",
+    min: 1,
+    max: 10,
+    next: "end"
+  },
+  q3f: {
+    question: "Насколько ты честен с собой? (1 — часто обманываю себя, 10 — всегда честен)",
+    type: "scale",
+    min: 1,
+    max: 10,
+    next: "end"
+  }
+};
+
+const RADAR_AXES = [
+  { label: "Целеустремлённость", key: "determination" },
+  { label: "Импульсивность",     key: "impulsivity"    },
+  { label: "Социальность",       key: "sociality"      },
+  { label: "Рационализм",        key: "rationalism"    },
+  { label: "Стрессоустойчивость",key: "resilience"     },
+  { label: "Самоанализ",         key: "introspection"  }
+];
+
+const TYPE_STATS = {
+  "npc": { label: "NPC", base: 41 },
+  "второстепенный персонаж": { label: "Второстепенный", base: 35 },
+  "главный герой": { label: "Главный герой", base: 24 }
+};
+
+// =============================================
+// СОСТОЯНИЕ
+// =============================================
+let currentQ = "start";
+let userAnswers = [];
+let timings = [];
+let questionStart = 0;
+let currentResult = null;
+let timerMode = false;
+let timerInterval = null;
+let timerLeft = 15;
+let chatHistory = [];
+let chatUsed = 0;
+
+// =============================================
+// УТИЛИТЫ
+// =============================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + id);
+  el.classList.add('active');
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function stripMarkdown(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.+?)\*\*/gs, '$1').replace(/\*(.+?)\*/gs, '$1')
+    .replace(/__(.+?)__/gs, '$1').replace(/_(.+?)_/gs, '$1')
+    .replace(/#+\s?/g, '').replace(/`{1,3}([^`]+)`{1,3}/g, '$1')
+    .replace(/\[(.+?)\]\(.+?\)/g, '$1').replace(/^\s*[-*]\s+/gm, '')
+    .trim();
+}
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' }) +
+    ' ' + d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+}
+
+function formatMs(ms) {
+  return ms < 1000 ? ms + ' мс' : (ms / 1000).toFixed(1) + ' с';
+}
+
+// =============================================
+// DUAL API
+// =============================================
+async function callMistralAPI(messages, maxTokens = 900) {
+  let lastError = null;
+  for (let i = 0; i < API_KEYS.length; i++) {
+    const key = API_KEYS[i];
+    const isFirst = i === 0;
+    if (!isFirst) {
+      const note = document.getElementById('api-note');
+      if (note) note.textContent = '⟳ Основной API недоступен, переключаюсь на резервный...';
+    }
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+        body: JSON.stringify({ model: API_MODEL, messages, temperature: 0.72, max_tokens: maxTokens })
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error('HTTP ' + response.status + ': ' + (err.message || response.statusText));
+      }
+      const data = await response.json();
+      return data.choices?.[0]?.message?.content || '';
+    } catch (e) {
+      lastError = e;
+      console.warn('API[' + i + '] failed:', e.message);
+    }
+  }
+  throw new Error('Оба API недоступны. ' + (lastError?.message || ''));
+}
+
+// =============================================
+// ИСТОРИЯ
+// =============================================
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem(LS_HISTORY) || '[]'); } catch (e) { return []; }
+}
+
+function saveToHistory(result) {
+  const h = getHistory();
+  const entry = {
+    id: Date.now(),
+    timestamp: Date.now(),
+    type: result.type,
+    predictability: result.predictability,
+    analysis: result.analysis,
+    conclusion: result.conclusion,
+    radar: result.radar || null,
+    timings: result.timings || [],
+    path: result.path || []
+  };
+  h.unshift(entry);
+  if (h.length > 10) h.length = 10;
+  localStorage.setItem(LS_HISTORY, JSON.stringify(h));
+}
+
+function renderHistoryList(containerId, activeId) {
+  const h = getHistory();
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  if (!h.length) { wrap.innerHTML = '<div class="history-empty">История пуста</div>'; return; }
+  wrap.innerHTML = '';
+  h.forEach(entry => {
+    const div = document.createElement('div');
+    div.className = 'history-item' + (entry.id === activeId ? ' active-entry' : '');
+    div.innerHTML = `
+      <div class="history-item-left">
+        <div class="history-item-type">${entry.type.toUpperCase()}</div>
+        <div class="history-item-date">${formatDate(entry.timestamp)}</div>
+      </div>
+      <div class="history-item-right">
+        <div class="history-item-pct">${entry.predictability}%</div>
+        <div class="history-item-label">предсказуемость</div>
+      </div>`;
+    div.onclick = () => {
+      currentResult = entry;
+      renderResult(entry);
+      showScreen('result');
+    };
+    wrap.appendChild(div);
+  });
+}
+
+function showFullHistory() {
+  renderHistoryList('full-history-list', currentResult?.id);
+  showScreen('history');
+}
+
+function clearHistory() {
+  if (!confirm('Очистить всю историю?')) return;
+  localStorage.removeItem(LS_HISTORY);
+  renderHistoryList('full-history-list', null);
+}
+
+function initStartHistory() {
+  const h = getHistory();
+  const card = document.getElementById('history-card');
+  if (h.length) { card.style.display = ''; renderHistoryList('history-list', null); }
+  else card.style.display = 'none';
+}
+
+// =============================================
+// TIMER MODE
+// =============================================
+function toggleTimerMode() {
+  timerMode = document.getElementById('timer-toggle').checked;
+  document.getElementById('timer-toggle-label').textContent = timerMode ? 'вкл' : 'выкл';
+  document.getElementById('timer-mode-hint').style.display = timerMode ? '' : 'none';
+}
+
+function startTimer(onExpire) {
+  clearTimer();
+  timerLeft = 15;
+  const wrap = document.getElementById('timer-wrap');
+  const fill = document.getElementById('timer-fill');
+  const val = document.getElementById('timer-val');
+  wrap.classList.add('visible');
+  fill.style.width = '100%';
+  fill.style.background = 'var(--highlight)';
+  val.textContent = timerLeft;
+
+  timerInterval = setInterval(() => {
+    timerLeft--;
+    val.textContent = timerLeft;
+    fill.style.width = (timerLeft / 15 * 100) + '%';
+    if (timerLeft <= 3) fill.style.background = '#f08080';
+    if (timerLeft <= 0) {
+      clearTimer();
+      onExpire();
+    }
+  }, 1000);
+}
+
+function clearTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  const wrap = document.getElementById('timer-wrap');
+  if (wrap) wrap.classList.remove('visible');
+}
+
+// =============================================
+// СТАРТ / СБРОС
+// =============================================
+function startTest() {
+  const saved = localStorage.getItem(LS_RESULT);
+  if (saved) {
+    try {
+      const data = JSON.parse(saved);
+      currentResult = data;
+      loadChatSession();
+      renderResult(data);
+      showScreen('result');
+      return;
+    } catch (e) { localStorage.removeItem(LS_RESULT); }
+  }
+  currentQ = "start";
+  userAnswers = [];
+  timings = [];
+  showScreen('question');
+  renderQuestion();
+}
+
+function resetTest() {
+  localStorage.removeItem(LS_RESULT);
+  localStorage.removeItem(LS_CHAT);
+  clearTimer();
+  currentQ = "start";
+  userAnswers = [];
+  timings = [];
+  currentResult = null;
+  chatHistory = [];
+  chatUsed = 0;
+  switchTabById('analysis');
+  initStartHistory();
+  showScreen('start');
+}
+
+// =============================================
+// ВОПРОСЫ (ветвление)
+// =============================================
+function renderQuestion() {
+  const q = QUESTION_TREE[currentQ];
+  const total = 4; // Всего 4 вопроса
+  const progress = Object.keys(QUESTION_TREE).indexOf(currentQ) + 1;
+  document.getElementById('progress-fill').style.width = (progress / total * 100) + '%';
+  document.getElementById('progress-label').textContent = progress + ' / ' + total;
+  document.getElementById('progress-time').textContent = '';
+  document.getElementById('q-num').textContent = 'Вопрос ' + progress;
+  document.getElementById('q-text').textContent = q.question;
+
+  const container = document.getElementById('q-options-container');
+  container.innerHTML = '';
+
+  if (q.type === "scale") {
+    const sliderWrap = document.createElement('div');
+    sliderWrap.className = 'slider-wrap';
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.min = q.min;
+    slider.max = q.max;
+    slider.value = Math.floor((q.min + q.max) / 2);
+    slider.className = 'slider';
+    slider.id = 'slider-' + currentQ;
+    const labels = document.createElement('div');
+    labels.className = 'slider-labels';
+    labels.innerHTML = `<span>${q.min}</span><span>${q.max}</span>`;
+    const value = document.createElement('div');
+    value.className = 'slider-value';
+    value.id = 'slider-value-' + currentQ;
+    value.textContent = slider.value;
+    slider.oninput = () => {
+      value.textContent = slider.value;
+    };
+    sliderWrap.appendChild(slider);
+    sliderWrap.appendChild(labels);
+    sliderWrap.appendChild(value);
+    container.appendChild(sliderWrap);
+
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-primary btn-sm';
+    btn.textContent = 'ДАЛЕЕ';
+    btn.style.marginTop = '12px';
+    btn.onclick = () => {
+      const val = parseInt(slider.value);
+      chooseAnswer(`Шкала: ${val}`, btn, val);
+    };
+    container.appendChild(btn);
+  } else {
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt.text;
+      btn.onclick = () => chooseAnswer(opt.text, btn, null, opt.next);
+      container.appendChild(btn);
+    });
+  }
+
+  questionStart = Date.now();
+
+  if (timerMode) {
+    startTimer(() => {
+      const btns = document.querySelectorAll('.option-btn, .btn-primary');
+      const rand = btns[Math.floor(Math.random() * btns.length)];
+      if (rand) {
+        if (rand.classList.contains('option-btn')) {
+          const opt = q.options.find(o => o.text === rand.textContent);
+          chooseAnswer(rand.textContent + ' [авто]', rand, null, opt?.next);
+        } else {
+          const slider = document.getElementById('slider-' + currentQ);
+          if (slider) {
+            const val = parseInt(slider.value);
+            chooseAnswer(`Шкала: ${val} [авто]`, rand, val);
+          }
+        }
+      }
+    });
+  }
+}
+
+function chooseAnswer(answer, btn, scaleValue = null, nextQ = null) {
+  clearTimer();
+  const elapsed = Date.now() - questionStart;
+  timings.push(elapsed);
+  document.querySelectorAll('.option-btn, .btn-primary').forEach(b => b.onclick = null);
+  if (btn.classList.contains('option-btn')) {
+    btn.classList.add('selected');
+  }
+  document.getElementById('progress-time').textContent = formatMs(elapsed);
+
+  let answerData = {
+    question: QUESTION_TREE[currentQ].question,
+    answer: answer.replace(' [авто]', '').trim(),
+    time_ms: elapsed,
+    type: QUESTION_TREE[currentQ].type
+  };
+  if (scaleValue !== null) {
+    answerData.scaleValue = scaleValue;
+  }
+  userAnswers.push(answerData);
+
+  if (nextQ) {
+    currentQ = nextQ;
+  } else if (QUESTION_TREE[currentQ].next) {
+    currentQ = QUESTION_TREE[currentQ].next;
+  } else {
+    currentQ = "end";
+  }
+
+  setTimeout(() => {
+    if (currentQ === "end") {
+      startAnalyzing();
+    } else {
+      renderQuestion();
+    }
+  }, 350);
+}
+
+// =============================================
+// АНАЛИЗ
+// =============================================
+async function startAnalyzing() {
+  showScreen('analyzing');
+  document.getElementById('api-note').textContent = '';
+
+  const steps = ['step-1', 'step-2', 'step-3', 'step-4', 'step-5'];
+  const delays = [250, 800, 1500, 2200, 3000];
+  steps.forEach((id, i) => {
+    setTimeout(() => {
+      document.getElementById(id).classList.add('visible');
+      if (i > 0) document.getElementById(steps[i - 1]).classList.add('done');
+    }, delays[i]);
+  });
+
+  try {
+    const result = await fetchMistralResult();
+    await new Promise(r => setTimeout(r, 3600));
+    document.getElementById('step-5').classList.add('done');
+
+    result.timings = timings;
+    result.answers = userAnswers;
+    result.timestamp = Date.now();
+    result.id = Date.now();
+    result.path = userAnswers.map(a => a.answer);
+
+    localStorage.setItem(LS_RESULT, JSON.stringify(result));
+    saveToHistory(result);
+    currentResult = result;
+    chatHistory = [];
+    chatUsed = 0;
+    loadChatSession();
+    renderResult(result);
+    setTimeout(() => showScreen('result'), 400);
+  } catch (err) {
+    await new Promise(r => setTimeout(r, 1500));
+    document.getElementById('error-msg').textContent = '⚠ ' + err.message;
+    document.getElementById('api-status-info').innerHTML =
+      'Проверено API ключей: <span>' + API_KEYS.length + '</span>. Оба недоступны. Попробуй позже.';
+    showScreen('error');
+  }
+}
+
+// =============================================
+// MISTRAL: основной запрос
+// =============================================
+async function fetchMistralResult() {
+  const avgTime = timings.length ? Math.round(timings.reduce((a, b) => a + b, 0) / timings.length) : 0;
+  const fastQ = timings.map((t, i) => t < 1500 ? i + 1 : null).filter(Boolean);
+  const slowQ = timings.map((t, i) => t > 5000 ? i + 1 : null).filter(Boolean);
+
+  const answersText = userAnswers.map((a, i) =>
+    `${i + 1}. ${a.question}\n   Ответ: ${a.answer}\n   Тип: ${a.type}\n   ${a.scaleValue ? `Шкала: ${a.scaleValue}/10\n` : ''}   Время: ${formatMs(a.time_ms)}${a.answer.includes('[авто]') ? ' (не успел ответить вовремя)' : ''}`
+  ).join('\n\n');
+
+  const timingNote = `\nСредняя скорость ответа: ${formatMs(avgTime)}.` +
+    (fastQ.length ? ` Быстрые (импульсивные) ответы: вопросы ${fastQ.join(',')}.` : '') +
+    (slowQ.length ? ` Долгое раздумье: вопросы ${slowQ.join(',')}.` : '') +
+    (timerMode ? ' Пользователь выбрал режим таймера.' : '');
+
+  const systemPrompt = `Ты — холодная аналитическая система, которая выявляет паттерны поведения человека. Учитывай содержание ответов, тип вопросов (дилеммы, проективные, ситуативные, шкалы) и скорость реакции.
+
+Выдай ответ СТРОГО в формате JSON без лишнего текста:
+{
+  "type": "NPC | второстепенный персонаж | главный герой",
+  "predictability": 73,
+  "analysis": ["Паттерн 1","Паттерн 2","Паттерн 3","Паттерн 4"],
+  "conclusion": "Жёсткое заключение 2–3 предложения. Последняя фраза — вызывает сомнение в себе.",
+  "radar": { "determination":70,"impulsivity":40,"sociality":55,"rationalism":65,"resilience":50,"introspection":75 }
+}
+Правила: никакого markdown, никаких звёздочек, только валидный JSON. type — ТОЛЬКО одно из трёх значений.`;
+
+  const content = await callMistralAPI([
+    { role: 'system', content: systemPrompt },
+    { role: 'user', content: `Данные пользователя:\n${answersText}\n${timingNote}` }
+  ], 900);
+
+  const jsonMatch = content.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error('Не удалось распознать ответ ИИ. Попробуй снова.');
+
+  let parsed;
+  try { parsed = JSON.parse(jsonMatch[0]); }
+  catch (e) { throw new Error('Ошибка разбора ответа ИИ.'); }
+
+  parsed.type = stripMarkdown(parsed.type || '');
+  parsed.conclusion = stripMarkdown(parsed.conclusion || '');
+  parsed.analysis = (parsed.analysis || []).map(a => stripMarkdown(a));
+
+  if (!parsed.type || !parsed.predictability || !parsed.analysis?.length || !parsed.conclusion)
+    throw new Error('Неполный ответ от ИИ. Попробуй снова.');
+
+  return parsed;
+}
+
+// =============================================
+// РЕНДЕР РЕЗУЛЬТАТА
+// =============================================
+function renderResult(data) {
+  const pct = Math.min(100, Math.max(0, parseInt(data.predictability) || 0));
+
+  document.getElementById('r-type').textContent = data.type.toUpperCase();
+  animateCounter('r-percent', 0, pct, '%', 1100);
+  setTimeout(() => { document.getElementById('r-bar').style.width = pct + '%'; }, 350);
+
+  const wrap = document.getElementById('r-analysis');
+  wrap.innerHTML = '';
+  (data.analysis || []).forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'result-analysis-item';
+    div.textContent = item;
+    wrap.appendChild(div);
+    setTimeout(() => div.classList.add('shown'), 300 + i * 180);
+  });
+
+  typewriterEffect('r-conclusion', data.conclusion || '');
+
+  renderTimings(data.timings || []);
+
+  if (data.radar) renderRadar(data.radar, 'radar-svg', 'radar-legend');
+
+  renderStats(data.type);
+
+  buildShare(data);
+
+  renderFriendRating(data.id || 'current');
+
+  renderCompareList();
+
+  switchTabById('analysis');
+}
+
+function animateCounter(id, from, to, suffix, duration) {
+  const el = document.getElementById(id);
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const val = Math.round(from + (to - from) * easeOut(t));
+    el.textContent = val + suffix;
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+function typewriterEffect(elementId, text) {
+  const el = document.getElementById(elementId);
+  el.innerHTML = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'typewriter-cursor';
+  el.appendChild(cursor);
+  let i = 0;
+  function tick() {
+    if (i < text.length) {
+      el.insertBefore(document.createTextNode(text[i]), cursor);
+      i++;
+      setTimeout(tick, 20);
+    } else {
+      setTimeout(() => cursor.remove(), 1200);
+    }
+  }
+  setTimeout(tick, 400);
+}
+
+function renderTimings(t) {
+  const card = document.getElementById('timing-card');
+  const chips = document.getElementById('timing-chips');
+  if (!t || !t.length) { card.style.display = 'none'; return; }
+  card.style.display = '';
+  chips.innerHTML = '';
+  const avg = Math.round(t.reduce((a, b) => a + b, 0) / t.length);
+  const min = Math.min(...t), max = Math.max(...t);
+  [
+    { label: 'Среднее', val: formatMs(avg) },
+    { label: 'Быстрейший', val: formatMs(min) },
+    { label: 'Медленнейший', val: formatMs(max) },
+    { label: 'Вопросов', val: t.length }
+  ].forEach(it => {
+    const c = document.createElement('div');
+    c.className = 'timing-chip';
+    c.innerHTML = `${it.label}: <span>${it.val}</span>`;
+    chips.appendChild(c);
+  });
+}
+
+function renderRadar(radarData, svgId, legendId, color = '#a4a71e', fillColor = 'rgba(83,144,15,0.25)') {
+  const svg = document.getElementById(svgId);
+  svg.innerHTML = '';
+  if (legendId) { const l = document.getElementById(legendId); if (l) l.innerHTML = ''; }
+
+  const cx = 130, cy = 130, R = 90;
+  const n = RADAR_AXES.length;
+  const angles = RADAR_AXES.map((_, i) => (Math.PI * 2 * i / n) - Math.PI / 2);
+
+  function pt(r, a) { return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
+  function svgEl(tag, attrs) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    return el;
+  }
+
+  [0.2, 0.4, 0.6, 0.8, 1.0].forEach(f => {
+    svg.appendChild(svgEl('polygon', {
+      points: angles.map(a => pt(R * f, a).join(',')).join(' '),
+      fill: 'none',
+      stroke: 'rgba(83,144,15,0.18)',
+      'stroke-width': '1'
+    }));
+  });
+  angles.forEach(a => {
+    const [x, y] = pt(R, a);
+    svg.appendChild(svgEl('line', {
+      x1: cx, y1: cy, x2: x, y2: y,
+      stroke: 'rgba(83,144,15,0.22)',
+      'stroke-width': '1'
+    }));
+  });
+
+  const values = RADAR_AXES.map(ax => Math.min(100, Math.max(0, parseFloat(radarData[ax.key] || 50))) / 100);
+  const dataPts = angles.map((a, i) => pt(R * values[i], a).join(',')).join(' ');
+  svg.appendChild(svgEl('polygon', {
+    points: dataPts,
+    fill: fillColor,
+    stroke: color,
+    'stroke-width': '2'
+  }));
+  angles.forEach((a, i) => {
+    const [x, y] = pt(R * values[i], a);
+    svg.appendChild(svgEl('circle', {
+      cx: x, cy: y, r: '4',
+      fill: '#d6ce15',
+      stroke: '#1f2605',
+      'stroke-width': '1.5'
+    }));
+  });
+
+  angles.forEach((a, i) => {
+    const [x, y] = pt(R + 22, a);
+    const text = svgEl('text', {
+      x, y,
+      'text-anchor': 'middle',
+      'dominant-baseline': 'middle',
+      fill: '#7a8a3a',
+      'font-size': '8.5',
+      'font-family': 'Courier New,monospace'
+    });
+    const label = RADAR_AXES[i].label;
+    if (label.length > 10) {
+      label.split(' ').forEach((w, wi) => {
+        const t = svgEl('tspan', { x, dy: wi === 0 ? '-5' : '11' });
+        t.textContent = w;
+        text.appendChild(t);
+      });
+    } else {
+      text.textContent = label;
+    }
+    svg.appendChild(text);
+  });
+
+  if (legendId) {
+    const legend = document.getElementById(legendId);
+    if (legend) {
+      RADAR_AXES.forEach((ax, i) => {
+        const item = document.createElement('div');
+        item.className = 'radar-legend-item';
+        item.innerHTML = `<div class="radar-legend-dot" style="background:${color}"></div><span>${ax.label}: <span style="color:var(--highlight);font-weight:700">${Math.round(values[i] * 100)}%</span></span>`;
+        legend.appendChild(item);
+      });
+    }
+  }
+}
+
+function renderStats(type) {
+  const nType = (type || '').toLowerCase().trim();
+  const row = document.getElementById('stats-row');
+  row.innerHTML = '';
+
+  const history = getHistory();
+  const counts = { 'npc': 0, 'второстепенный персонаж': 0, 'главный герой': 0 };
+  history.forEach(e => {
+    const k = (e.type || '').toLowerCase().trim();
+    if (counts[k] !== undefined) counts[k]++;
+  });
+
+  const totals = {};
+  Object.keys(TYPE_STATS).forEach(k => { totals[k] = TYPE_STATS[k].base + (counts[k] || 0); });
+  const sum = Object.values(totals).reduce((a, b) => a + b, 0);
+
+  Object.entries(TYPE_STATS).forEach(([key, info]) => {
+    const share = Math.round(totals[key] / sum * 100);
+    const isYou = key === nType;
+    const item = document.createElement('div');
+    item.className = 'stats-item';
+    item.innerHTML = `
+      <div class="stats-item-head">
+        <span>${info.label}${isYou ? ' ← ты' : ''}</span>
+        <span class="highlight-val">${share}%</span>
+      </div>
+      <div class="stats-bar-track"><div class="stats-bar-fill" data-val="${share}"></div></div>`;
+    row.appendChild(item);
+  });
+
+  setTimeout(() => {
+    row.querySelectorAll('.stats-bar-fill').forEach(b => {
+      b.style.width = b.dataset.val + '%';
+    });
+  }, 400);
+
+  const yourShare = Math.round((totals[nType] || 0) / sum * 100);
+  document.getElementById('stats-your-type').textContent = (TYPE_STATS[nType]?.label || type).toUpperCase();
+  document.getElementById('stats-your-share').textContent = 'Таких как ты — ' + yourShare + '%';
+}
+
+function buildShare(data) {
+  const summary = document.getElementById('share-summary');
+  if (summary) {
+    summary.textContent = `${data.type.toUpperCase()} · Предсказуемость ${data.predictability}%`;
+  }
+  try {
+    const payload = {
+      type: data.type,
+      predictability: data.predictability,
+      analysis: data.analysis,
+      conclusion: data.conclusion
+    };
+    const encoded = btoa(encodeURIComponent(JSON.stringify(payload)));
+    shareUrl = window.location.origin + window.location.pathname + '#r=' + encoded;
+  } catch (e) {
+    shareUrl = window.location.href;
+  }
+}
+
+function copyShareUrl() {
+  const btn = document.getElementById('copy-btn');
+  const text = `Мой тип: ${currentResult?.type?.toUpperCase()} · Предсказуемость: ${currentResult?.predictability}%\nИИ тебя раскусил: ${shareUrl}`;
+  navigator.clipboard?.writeText(text).then(() => {
+    btn.textContent = 'OK ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => { prompt('Скопируй:', text); });
+}
+
+function nativeShare() {
+  const text = `Мой тип: ${currentResult?.type?.toUpperCase()} · Предсказуемость: ${currentResult?.predictability}%\nИИ тебя раскусил: ${shareUrl}`;
+  if (navigator.share) {
+    navigator.share({ title: 'ИИ тебя раскусил', text, url: shareUrl }).catch(() => {});
+  } else {
+    copyShareUrl();
+  }
+}
+
+function checkHashResult() {
+  const hash = window.location.hash;
+  if (!hash.startsWith('#r=')) return false;
+  try {
+    const data = JSON.parse(decodeURIComponent(atob(hash.slice(3))));
+    if (!data.type) return false;
+    currentResult = data;
+    renderResult(data);
+    showScreen('result');
+    return true;
+  } catch (e) { return false; }
+}
+
+// =============================================
+// СРАВНЕНИЕ
+// =============================================
+let compareSelected = [];
+
+function renderCompareList() {
+  compareSelected = [];
+  const h = getHistory();
+  const wrap = document.getElementById('compare-list');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  document.getElementById('compare-btn').style.display = 'none';
+  document.getElementById('compare-legend').style.display = 'none';
+  document.getElementById('compare-radar-card').style.display = 'none';
+
+  if (h.length < 2) {
+    wrap.innerHTML = '<div class="history-empty">Нужно минимум 2 прохождения для сравнения</div>';
+    return;
+  }
+
+  h.forEach(entry => {
+    const div = document.createElement('div');
+    div.className = 'compare-select-item';
+    div.dataset.id = entry.id;
+    div.innerHTML = `
+      <div class="compare-dot" id="cdot-${entry.id}" style="background:rgba(83,144,15,0.3);border:1px solid rgba(83,144,15,0.4)"></div>
+      <div class="compare-info">
+        <div class="compare-type">${entry.type.toUpperCase()}</div>
+        <div class="compare-date">${formatDate(entry.timestamp)}</div>
+      </div>
+      <div class="compare-pct">${entry.predictability}%</div>`;
+    div.onclick = () => toggleCompareSelect(entry, div);
+    wrap.appendChild(div);
+  });
+}
+
+function toggleCompareSelect(entry, el) {
+  const existing = compareSelected.findIndex(e => e.id === entry.id);
+  if (existing !== -1) {
+    compareSelected.splice(existing, 1);
+    el.classList.remove('sel-a', 'sel-b');
+    document.getElementById('cdot-' + entry.id).style.background = 'rgba(83,144,15,0.3)';
+  } else if (compareSelected.length < 2) {
+    compareSelected.push(entry);
+    const isA = compareSelected.length === 1;
+    el.classList.add(isA ? 'sel-a' : 'sel-b');
+    document.getElementById('cdot-' + entry.id).style.background = isA ? '#d6ce15' : '#53900f';
+  }
+  document.getElementById('compare-btn').style.display = compareSelected.length === 2 ? '' : 'none';
+}
+
+function doCompare() {
+  if (compareSelected.length < 2) return;
+  const [a, b] = compareSelected;
+  const svgEl = document.getElementById('compare-svg');
+  svgEl.innerHTML = '';
+
+  if (a.radar) renderRadarOverlay(a.radar, 'compare-svg', '#d6ce15', 'rgba(214,206,21,0.15)');
+  if (b.radar) renderRadarOverlay(b.radar, 'compare-svg', '#53900f', 'rgba(83,144,15,0.2)');
+
+  document.getElementById('compare-legend').style.display = 'flex';
+  document.getElementById('compare-radar-card').style.display = '';
+  document.getElementById('compare-radar-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderRadarOverlay(radarData, svgId, color, fillColor) {
+  const svg = document.getElementById(svgId);
+  const cx = 130, cy = 130, R = 90;
+  const angles = RADAR_AXES.map((_, i) => (Math.PI * 2 * i / RADAR_AXES.length) - Math.PI / 2);
+
+  function pt(r, a) { return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
+  function svgEl(tag, attrs) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    return el;
+  }
+
+  if (!svg.querySelector('polygon')) {
+    [0.2, 0.4, 0.6, 0.8, 1.0].forEach(f => {
+      svg.appendChild(svgEl('polygon', {
+        points: angles.map(a => pt(R * f, a).join(',')).join(' '),
+        fill: 'none',
+        stroke: 'rgba(83,144,15,0.18)',
+        'stroke-width': '1'
+      }));
+    });
+    angles.forEach(a => {
+      const [x, y] = pt(R, a);
+      svg.appendChild(svgEl('line', {
+        x1: cx, y1: cy, x2: x, y2: y,
+        stroke: 'rgba(83,144,15,0.22)',
+        'stroke-width': '1'
+      }));
+    });
+    angles.forEach((a, i) => {
+      const [x, y] = pt(R + 22, a);
+      const text = svgEl('text', {
+        x, y,
+        'text-anchor': 'middle',
+        'dominant-baseline': 'middle',
+        fill: '#7a8a3a',
+        'font-size': '8.5',
+        'font-family': 'Courier New,monospace'
+      });
+      const label = RADAR_AXES[i].label;
+      if (label.length > 10) {
+        label.split(' ').forEach((w, wi) => {
+          const t = svgEl('tspan', { x, dy: wi === 0 ? '-5' : '11' });
+          t.textContent = w;
+          text.appendChild(t);
+        });
+      } else {
+        text.textContent = label;
+      }
+      svg.appendChild(text);
+    });
+  }
+
+  const values = RADAR_AXES.map(ax => Math.min(100, Math.max(0, parseFloat(radarData[ax.key] || 50))) / 100);
+  const dataPts = angles.map((a, i) => pt(R * values[i], a).join(',')).join(' ');
+  svg.appendChild(svgEl('polygon', {
+    points: dataPts,
+    fill: fillColor,
+    stroke: color,
+    'stroke-width': '2',
+    'stroke-dasharray': color === '#53900f' ? '5,3' : 'none'
+  }));
+  angles.forEach((a, i) => {
+    const [x, y] = pt(R * values[i], a);
+    svg.appendChild(svgEl('circle', {
+      cx: x, cy: y, r: '3.5',
+      fill: color,
+      stroke: '#1f2605',
+      'stroke-width': '1.5'
+    }));
+  });
+}
+
+// =============================================
+// ОЦЕНКА ТОЧНОСТИ
+// =============================================
+function renderFriendRating(resultId) {
+  const wrap = document.getElementById('friend-rating-wrap');
+  const resultEl = document.getElementById('rating-result');
+  const barsEl = document.getElementById('rating-bars');
+  wrap.innerHTML = '';
+
+  const ratings = getRatings();
+  const myRating = ratings[resultId];
+
+  const options = [
+    { val: 'exact', label: 'Точно в цель ✓', emoji: '💯' },
+    { val: 'mostly', label: 'В основном да', emoji: '👍' },
+    { val: 'partial', label: 'Частично', emoji: '🤔' },
+    { val: 'miss', label: 'Мимо', emoji: '❌' }
+  ];
+
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'rating-btn' + (myRating === opt.val ? ' voted' : '');
+    btn.innerHTML = `${opt.emoji}<br><span style="font-size:10px">${opt.label}</span>`;
+    btn.onclick = () => { saveRating(resultId, opt.val); renderFriendRating(resultId); };
+    wrap.appendChild(btn);
+  });
+
+  const allVotes = Object.values(ratings);
+  const total = allVotes.length;
+  if (total > 0) {
+    resultEl.style.display = '';
+    barsEl.style.display = '';
+    resultEl.textContent = `Оценки ${total} прохождений:`;
+    barsEl.innerHTML = '';
+    options.forEach(opt => {
+      const count = allVotes.filter(v => v === opt.val).length;
+      const pct = Math.round(count / total * 100);
+      const row = document.createElement('div');
+      row.className = 'rating-bar-row';
+      row.innerHTML = `<span style="min-width:60px">${opt.emoji} ${pct}%</span>
+        <div class="rating-bar-track"><div class="rating-bar-fill" data-val="${pct}"></div></div>
+        <span>${count}</span>`;
+      barsEl.appendChild(row);
+    });
+    setTimeout(() => {
+      barsEl.querySelectorAll('.rating-bar-fill').forEach(b => {
+        b.style.width = b.dataset.val + '%';
+      });
+    }, 200);
+  } else {
+    resultEl.style.display = 'none';
+    barsEl.style.display = 'none';
+  }
+}
+
+function getRatings() {
+  try { return JSON.parse(localStorage.getItem(LS_RATINGS) || '{}'); } catch (e) { return {}; }
+}
+
+function saveRating(id, val) {
+  const r = getRatings();
+  r[id] = val;
+  localStorage.setItem(LS_RATINGS, JSON.stringify(r));
+}
+
+// =============================================
+// AI ЧАТ
+// =============================================
+function loadChatSession() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LS_CHAT) || '{}');
+    chatHistory = saved.history || [];
+    chatUsed = saved.used || 0;
+  } catch (e) {
+    chatHistory = [];
+    chatUsed = 0;
+  }
+}
+
+function saveChatSession() {
+  localStorage.setItem(LS_CHAT, JSON.stringify({ history: chatHistory, used: chatUsed }));
+}
+
+function restoreChatUI() {
+  const container = document.getElementById('chat-messages');
+  container.innerHTML = '';
+
+  if (chatHistory.length === 0) {
+    appendChatMsg('ai', 'Система активирована. Я проанализировал тебя. Задай вопрос — отвечу честно, без лишних слов.');
+  } else {
+    chatHistory.forEach(msg => {
+      if (msg.role === 'user') appendChatMsg('user', msg.content);
+      else if (msg.role === 'assistant') appendChatMsg('ai', msg.content);
+    });
+  }
+
+  updateChatLimit();
+}
+
+function updateChatLimit() {
+  const rem = document.getElementById('chat-remaining');
+  if (rem) rem.textContent = Math.max(0, CHAT_LIMIT - chatUsed);
+  const sendBtn = document.getElementById('chat-send');
+  if (sendBtn) sendBtn.disabled = chatUsed >= CHAT_LIMIT;
+}
+
+function appendChatMsg(role, text) {
+  const container = document.getElementById('chat-messages');
+  const msg = document.createElement('div');
+  msg.className = 'chat-msg';
+  const label = document.createElement('div');
+  label.className = 'chat-msg-label ' + (role === 'user' ? 'user-label' : 'ai-label');
+  label.textContent = role === 'user' ? 'ТЫ' : 'СИСТЕМА';
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-msg-bubble ' + role;
+  bubble.textContent = text;
+  msg.appendChild(label);
+  msg.appendChild(bubble);
+  container.appendChild(msg);
+  container.scrollTop = container.scrollHeight;
+  return bubble;
+}
+
+function chatKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendChatMessage();
+  }
+}
+
+async function sendChatMessage() {
+  if (chatUsed >= CHAT_LIMIT) return;
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  chatUsed++;
+  updateChatLimit();
+
+  appendChatMsg('user', text);
+
+  const container = document.getElementById('chat-messages');
+  const typingBubble = document.createElement('div');
+  typingBubble.className = 'chat-msg';
+  const typingLabel = document.createElement('div');
+  typingLabel.className = 'chat-msg-label ai-label';
+  typingLabel.textContent = 'СИСТЕМА';
+  const typingText = document.createElement('div');
+  typingText.className = 'chat-msg-bubble ai typing';
+  typingText.textContent = '...';
+  typingBubble.appendChild(typingLabel);
+  typingBubble.appendChild(typingText);
+  container.appendChild(typingBubble);
+  container.scrollTop = container.scrollHeight;
+
+  const r = currentResult;
+  const systemContext = `Ты — холодная аналитическая система. Ты уже проанализировал этого пользователя.
+Результат:
+- Тип: ${r?.type || '?'}
+- Предсказуемость: ${r?.predictability || '?'}%
+- Анализ: ${(r?.analysis || []).join('; ')}
+- Заключение: ${r?.conclusion || '?'}
+- Путь ответов: ${(r?.path || []).join(' → ')}
+Отвечай кратко, уверенно, слегка жёстко. Без воды. Без markdown и звёздочек.`;
+
+  chatHistory.push({ role: 'user', content: text });
+
+  const messages = [
+    { role: 'system', content: systemContext },
+    ...chatHistory
+  ];
+
+  try {
+    const reply = await callMistralAPI(messages, 400);
+    const clean = stripMarkdown(reply);
+    typingBubble.remove();
+    appendChatMsg('ai', clean);
+    chatHistory.push({ role: 'assistant', content: clean });
+    saveChatSession();
+  } catch (e) {
+    typingBubble.remove();
+    appendChatMsg('ai', 'Ошибка соединения. Оба API недоступны. Попробуй позже.');
+    chatUsed = Math.max(0, chatUsed - 1);
+    updateChatLimit();
+  }
+}
+
+// =============================================
+// ТАБЫ
+// =============================================
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const panel = document.getElementById('tab-' + name);
+  if (panel) panel.classList.add('active');
+  if (name === 'stats') {
+    setTimeout(() => {
+      document.querySelectorAll('.stats-bar-fill').forEach(b => {
+        b.style.width = b.dataset.val + '%';
+      });
+    }, 100);
+  }
+  if (name === 'compare') renderCompareList();
+}
+
+function switchTabById(name) {
+  const btn = document.querySelector(`.tab-btn[onclick*="'${name}'"]`);
+  switchTab(name, btn);
+}
+
+// =============================================
+// ИНИЦИАЛИЗАЦИЯ
+// =============================================
+(function init() {
+  if (!checkHashResult()) {
+    initStartHistory();
+  }
+})();
+</script>
+</body>
+</html>
